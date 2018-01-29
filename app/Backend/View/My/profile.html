@@ -1,0 +1,28 @@
+<include file="Common:header_simple" />
+
+<div class="container">
+  <form action="{:U('my/profile')}" method="post" id="form-profile">
+    <div class="form-group">
+      <label for="username"><span class="c-red">*</span>登录名称：</label>
+      <input type="text" class="form-control" name="username" id="username" autocomplete="off" value="{$account.username}" placeholder="用来登录的账户名称" readonly />
+    </div>
+    <div class="form-group">
+      <label for="alias_name"><span class="c-red">*</span>别名：</label>
+      <input type="text" class="form-control" name="alias_name" id="alias_name" autocomplete="off" value="{$account.alias_name}" placeholder="别人看到你的名字" required />
+    </div>
+    <div class="form-group">
+      <label for="password">密码：</label>
+      <input type="text" class="form-control" name="password" id="password" autocomplete="off" value="" placeholder="不设置密码请留空，空格也是密码的一部分" />
+    </div>
+    <div class="form-group">
+      <button class="btn btn-primary btn-block" type="submit">提交</button>
+    </div>
+  </form>
+</div>
+
+<include file="Common:footer_simple" />
+<script type="text/javascript">
+  formValidate("form-profile");
+</script>
+</body>
+</html>

@@ -1,0 +1,162 @@
+<include file="Common:header" />
+
+<div class="container" style="margin-top:50px">
+  <div class="row">
+    <form action="{:U('batch/edit')}" method="post" id="batch-edit">
+      <div class="col-md-7">
+        <div class="form-group">
+          <label for="batch_no"><span class="c-red">*</span>批次名称：</label>
+          <input type="text" class="form-control" autocomplete="off" name="batch_no" id="batch_no" value="{$batchInfo.batch_no}" required />
+        </div>
+        <div class="form-group">
+          <label for="brand_name">品牌：</label>
+          <input type="text" class="form-control" autocomplete="off" name="brand_name" id="brand_name" value="{$batchInfo.brand_name}" />
+        </div>
+        <div class="form-group">
+          <label for="title_template">标题模板：</label>
+          <textarea rows="2" class="form-control" autocomplete="off" name="title_template" id="title_template">{$batchInfo.title_template}</textarea>
+        </div>
+        <div class="form-group">
+          <label for="keyword_template_1">搜索关键字模板1：</label>
+          <input type="text" class="form-control" autocomplete="off" name="keyword_template_1" id="keyword_template_1" value="{$batchInfo.keyword_template_1}" />
+        </div>
+        <div class="form-group">
+          <label for="keyword_template_2">搜索关键字模板2：</label>
+          <input type="text" class="form-control" autocomplete="off" name="keyword_template_2" id="keyword_template_2" value="{$batchInfo.keyword_template_2}" />
+        </div>
+        <div class="form-group">
+          <label for="keyword_template_3">搜索关键字模板3：</label>
+          <input type="text" class="form-control" autocomplete="off" name="keyword_template_3" id="keyword_template_3" value="{$batchInfo.keyword_template_3}" />
+        </div>
+        <div class="form-group">
+          <label for="keyword_template_4">搜索关键字模板4：</label>
+          <input type="text" class="form-control" autocomplete="off" name="keyword_template_4" id="keyword_template_4" value="{$batchInfo.keyword_template_4}" />
+        </div>
+        <div class="form-group">
+          <label for="keyword_template_5">搜索关键字模板5：</label>
+          <input type="text" class="form-control" autocomplete="off" name="keyword_template_5" id="keyword_template_5" value="{$batchInfo.keyword_template_5}" />
+        </div>
+
+        <div class="form-group">
+          <label for="keyword_template_6">特色关键字模板1：</label>
+          <input type="text" class="form-control" autocomplete="off" name="keyword_template_6" id="keyword_template_6" value="{$batchInfo.keyword_template_6}" />
+        </div>
+        <div class="form-group">
+          <label for="keyword_template_7">特色关键字模板2：</label>
+          <input type="text" class="form-control" autocomplete="off" name="keyword_template_7" id="keyword_template_7" value="{$batchInfo.keyword_template_7}" />
+        </div>
+        <div class="form-group">
+          <label for="keyword_template_8">特色关键字模板3：</label>
+          <input type="text" class="form-control" autocomplete="off" name="keyword_template_8" id="keyword_template_8" value="{$batchInfo.keyword_template_8}" />
+        </div>
+
+        <div class="form-group">
+          <label for="modifier">卖点，一行一条：</label>
+          <textarea rows="5" class="form-control" autocomplete="off" name="modifier" id="modifier">{$batchInfo.modifier}</textarea>
+        </div>
+        <div class="form-group">
+          <label for="description_template">商品介绍：</label>
+          <textarea rows="4" class="form-control" autocomplete="off" name="description_template" id="description_template">{$batchInfo.description_template}</textarea>
+        </div>
+        <!--div class="form-group">
+          <label for="introduce_template">介绍模板(用于发布商品)：</label>
+          <textarea rows="5" class="form-control" autocomplete="off" name="introduce_template" id="introduce_template">{$batchInfo.introduce_template}</textarea>
+        </div-->
+        <div class="form-group">
+          <label class="control-label">是否激活：</label>
+          <div>
+            <label class="radio-inline"><input name="is_active" type="radio" value="0" <if condition="$batchInfo.is_active eq 0">checked</if> required /> 未激活</label>
+            <label class="radio-inline"><input name="is_active" type="radio" value="1" <if condition="$batchInfo.is_active eq 1">checked</if> /> 激活</label>
+          </div>
+        </div>
+        <if condition="$Think.session.account.allow_publish eq '1'">
+        <div class="form-group">
+          <label class="control-label">是否发布：</label>
+          <div>
+            <label class="radio-inline"><input name="is_publish" type="radio" value="0" <if condition="$batchInfo.is_publish eq 0">checked</if> required /> 不是</label>
+            <label class="radio-inline"><input name="is_publish" type="radio" value="1" <if condition="$batchInfo.is_publish eq 1">checked</if> /> 是</label>
+          </div>
+        </div>
+        </if>
+        <div class="form-group">
+          <button class="btn btn-primary" type="submit">保存</button> &nbsp;
+        </div>
+      </div>
+      <div class="col-md-5">
+        <div class="form-group">
+          <label>模板标签：</label>
+          <div class="col-md-12">
+            <code>{product_name}</code> 主产品名称(多个可选)<br />
+            <code>{secondary_product_name}</code> 副产品名称(多个可选)<br />
+            <code>{all_product_name}</code> 所有产品名称(多个可选)<br />
+            <code>{model_name}</code> 主型号名称(多个可选)<br />
+            <code>{full_model_name}</code> 型号名称全称<br />
+            <code>{secondary_model_name}</code> 副型号名称(多个可选)<br />
+            <code>{material}</code> 材质(对应“模具管理”里的“材质”)<br />
+            <code>{color}</code> 颜色(对应“模具管理”里的“颜色”)<br />
+            <code>{style}</code> 款式(对应“模具管理”里的“款式”)<br />
+            <code>{topic_name}</code> 主题名称(仅一个)<br />
+            <code>{topic_title}</code> 主题关键词<br />
+            <code>{photo_title}</code> 图片标题(仅一个)<br />
+            <code>{photo_keywords}</code> 图片关键词(可多个，只适用于关键词)<br />
+            <code>{photo_keywords_list}</code> 图片关键词列表，用空格隔开<br />
+            <code>{brand_name}</code> 品牌名称(左侧填写)
+          </div>
+        </div>
+        <div class="form-group" id="mould-box">
+          <label>要选择的分类：</label>
+          <select id="top-cate" name="category_id">
+            <volist name="categoryList" id="category"><if condition="$category.level eq 1">
+              <option value="{$category.id}">{$category.name}</option>
+            </if></volist>
+          </select>
+
+          <volist name="categoryList" id="category">
+            <if condition="$category.level neq 1">
+              <if condition="count($category['mould_list']) gt 0">
+              <div class="col-md-12" style="display:none">
+                <label><input type="checkbox" class="sub-cat" _tcid="{$category.parent_id}" value="{$category.id}">
+                  <span style="font-weight:normal;color:red">{$category.name}</span>
+                </label>
+                <volist name="category.mould_list" id="mould">
+                  <label><input type="checkbox" class="cat-mould" id="mould_{$mould.id}" _tcid="{$category.parent_id}" _scid="{$mould.category_id}" name="mould_id[]" value="{$mould.id}">
+                    <span style="font-weight:normal">{$mould.title}</span>
+                  </label> &nbsp;
+                </volist>
+              </div>
+              </if>
+            </if>
+          </volist>
+        </div>
+      </div>
+      <input type="hidden" name="batch_id" value="{$batchId}" />
+    </form>
+  </div>
+</div>
+<include file="Common:footer" />
+<script type="text/javascript">
+  var mids = {$batchInfo[mould_ids]};
+
+  $('#top-cate').bind('change', function(){
+    var cid = $(this).val();
+    $("#mould-box input").parent().parent().hide();
+    $("input[_tcid='"+cid+"']").parent().parent().show();
+  });
+
+  $('.sub-cat').bind('click', function(){
+    var cid = $(this).val();
+    var checked = $(this).prop('checked');
+    $("input[_scid='"+cid+"']").prop('checked', checked);
+  });
+
+  $(function(){
+    formValidate("batch-edit");
+    $.each(mids, function(i,v){
+      $('#mould_'+v).prop('checked', true);
+    });
+
+    $('#top-cate').val("{$batchInfo.category_id}").trigger('change');
+  });
+</script>
+</body>
+</html>

@@ -1,0 +1,55 @@
+.webuploader-container {
+    position: relative;
+}
+.webuploader-container label{font-size:12px}
+.webuploader-element-invisible {
+    position: absolute !important;
+    clip: rect(1px 1px 1px 1px); /* IE6, IE7 */
+    clip: rect(1px,1px,1px,1px);
+}
+.webuploader-pick {
+    position: relative;
+    display: inline-block;
+    cursor: pointer;
+    background: #00b7ee;
+    padding: 0px 5px;
+    color: #fff;
+    text-align: center;
+    border-radius: 0px;
+    overflow: hidden;
+}
+.webuploader-pick-hover {
+    background: #00a2d4;
+}
+
+.webuploader-pick-disable {
+    opacity: 0.6;
+    pointer-events:none;
+}
+
+.webuploader-list{
+    width:100%;
+    margin:0;
+    padding:0;
+    list-style:none;
+}
+.webuploader-item{
+    display:inline
+}
+.webuploader-action {
+    display:inline-block;
+    line-height:21px;
+    vertical-align:top;
+}
+
+.webuploader-status {
+    font-size:11px;
+    height:21px;line-height:21px;
+}
+.webuploader-status .webuploader-filename{
+
+}
+
+.webuploader-list li{position:relative;float:left;margin-right:10px}
+.webuploader-list li img{max-width:100px;max-height:150px}
+.webuploader-list li .btn-my-del{position:absolute;opacity:0.8;left:3px;top:3px;width:20px;height:20px;padding:0}

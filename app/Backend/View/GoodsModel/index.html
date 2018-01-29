@@ -1,0 +1,98 @@
+<include file="Common:header" />
+<style>
+  .pagination{margin:10px 0}
+</style>
+
+<div class="container-container" style="margin-top:20px;">
+
+
+  <div class="row">
+    <div class="col-md-12">
+      <div class="pull-left pagination">{$pageStr}</div>
+    </div>
+  </div>
+
+  <!--<div class="row">-->
+    <!--<div class="col-md-12">-->
+      <!--<form class="form-inline" action="index.php" method="get" id="exportForm">-->
+        <!--<input type="hidden" name="c" id="c" value="goods" />-->
+        <!--<input type="hidden" name="a" id="a" value="index" />-->
+        <!--<input type="hidden" name="timeline" value="{$timeline}" />-->
+        <!--<div class="form-group">-->
+          <!--<label class="sr-only" for="asin">ASIN</label>-->
+          <!--<input type="text" class="form-control" id="asin" name="asin" placeholder="ASIN" size="10" value="{$asin}">-->
+        <!--</div>-->
+        <!--<div class="form-group">-->
+          <!--<label class="sr-only" for="asin">关键字</label>-->
+          <!--<input type="text" class="form-control" id="keyword" name="keyword" placeholder="标题关键字" size="10" value="{$keyword}">-->
+        <!--</div>-->
+        <!--<select class="form-control" name="status">-->
+          <!--<option value="" <if condition="$status eq ''">selected</if>>所有状态</option>-->
+          <!--<option value="-1" <if condition="$status eq '-1'">selected</if>>不可用</option>-->
+          <!--<option value="1"<if condition="$status eq '1'">selected</if>>可用</option>-->
+          <!--<option value="0" <if condition="$status eq '0'">selected</if>>未确定</option>-->
+        <!--</select>-->
+        <!--<button type="submit" class="btn btn-default">搜索</button>-->
+        <!--<button type="button" id="exportBtn" class="btn btn-default">导出ASIN</button>-->
+      <!--</form>-->
+    <!--</div>-->
+  <!--</div>-->
+  <a href="{:U('goodsModel/edit')}">添加商品</a>
+  <table id="photo-list" class="table table-border table-bordered table-bg table-hover table-order-sort mt-10">
+    <thead>
+    <tr>
+      <th width="10%">批次</th>
+      <th width="10%">所属模具</th>
+      <th width="5%">图片</th>
+      <th>标题</th>
+      <th width="20%">操作</th>
+    </tr>
+    </thead>
+    <tbody>
+    <volist name="goodsList" id="goods">
+      <tr>
+        <td>{$goods.goods_sn}</td>
+
+        <td>{$goods.cat_name}</td>
+        <td><a href="{$goods.photo}" target="_blank"><img src="{$goods.goods_img}" width="100" /></a></td>
+        <td>{$goods.goods_name}</td>
+        <td>
+          <!--<div class="radio col-md-12"><label><input type="radio" name="radio_status_{$goods.asin}" class="status_radio" value="-1" _asin="{$goods.asin}" <if condition="$goods['status'] eq '-1'">checked</if> /> 不可用</label></div>-->
+          <!--<div class="radio col-md-12"><label><input type="radio" name="radio_status_{$goods.asin}" class="status_radio" value="1" _asin="{$goods.asin}" <if condition="$goods['status'] eq '1'">checked</if> /> 可用</label></div>-->
+          <!--<div class="radio col-md-12"><label><input type="radio" name="radio_status_{$goods.asin}" class="status_radio" value="0" _asin="{$goods.asin}" <if condition="$goods['status'] eq '0'">checked</if> /> 未确定</label></div>-->
+          <a href="{:U('goodsModel/edit',array('id'=>$goods[goods_id]))}">编辑</a>
+          <a href="{:U('goodsModel/del',array('id'=>$goods[goods_id]))}">删除</a>
+        </td>
+      </tr>
+    </volist>
+    </tbody>
+  </table>
+  <div class="pull-right pagination">{$pageStr}</div>
+</div>
+
+<include file="Common:footer" />
+
+<script type="text/javascript">
+  $(document).delegate(".status_radio","click",function(){
+    var asin = $(this).attr('_asin'), status=$(this).val(), that = $(this);
+    $.ajax({
+      type: 'GET',
+      dataType: 'json',
+      url: "{:U('goods/status')}",
+      data: {asin:asin,status:status},
+      success: function(data){
+        that.parent().parent().parent().find('div').removeClass('has-error').removeClass('has-success');
+        if(data.status == '0'){
+          that.parent().parent().addClass('has-error');
+        }else{
+          that.parent().parent().addClass('has-success');
+        }
+      }
+    });
+  }).delegate('#exportBtn','click',function(){
+    var params = $("#exportForm").serialize();
+    window.location.href = "/index.php?"+params+"&c=goods&a=export";
+  });
+</script>
+</body>
+</html>

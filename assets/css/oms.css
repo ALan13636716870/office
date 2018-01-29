@@ -1,0 +1,86 @@
+
+body{padding:50px 20px 0}
+.pos-absolute{position:absolute;}
+.pos-relative{position:relative;}
+.pos-top-right{position:absolute;right:0;top:0}
+.pos-bottom-left{position:absolute;left:10px;bottom:0}
+.ml-10{margin-left:10px;}
+.mt-10{margin-top:10px;}
+.mr-10{margin-right:10px;}
+.mb-10{margin-bottom:10px;}
+.ml-5{margin-left:5px;}
+.mt-5{margin-top:5px;}
+.mr-5{margin-right:5px;}
+.mb-5{margin-bottom:5px;}
+.pd-0{padding:0}
+.ph-0{padding-left:0;padding-right:0}
+
+.width-110{width:110px !important;max-width:110px;}
+
+.text-red{color:#f00}
+.error{font-weight:normal;color:#f00}  /*for jquery-validation*/
+
+.signin-box{padding:50px 300px}
+.signin-box .tab-content{padding-top:10px}
+.signin-box .nav-tabs a{font-size:20px}
+.signin-box .account-tip{position:absolute;left:0;top:0;}
+
+.factory_btn{position:absolute;left:5px;top:5px;}
+.shipping_btn{position:absolute;right:5px;top:5px}
+
+.f-16{font-size:16px}
+.f-18{font-size:18px}
+
+/*主要颜色*/
+.c-primary,.c-primary a,a.c-primary{color:#5a98de}
+.c-primary a:hover,a.c-primary:hover{ color:#5a98de}
+/*次主色*/
+.c-secondary,.c-secondary a,a.c-secondary{color:#555}
+.c-secondary a:hover,a.c-secondary:hover{ color:#555}
+
+/*强调色—成功*/
+.c-success,.c-success a,a.c-success{color:#5eb95e}
+.c-success a:hover,a.c-success:hover{ color:#5eb95e}
+
+/*强调色—危险*/
+.c-danger,.c-danger a,a.c-danger{color:#dd514c}
+.c-danger a:hover,a.c-danger:hover{ color:#dd514c}
+
+/*强调色—警告*/
+.c-warning,.c-warning a,a.c-warning{color:#f37b1d}
+.c-warning a:hover,a.c-warning:hover{ color:#f37b1d}
+
+/*强调色—错误*/
+.c-error,.c-error a,a.c-error{color:#c00}
+.c-error a:hover,a.c-error:hover{ color:#c00}
+
+/*辅助色—浅黑*/
+.c-333,.c-333 a,a.c-333{color:#333}
+.c-333 a:hover,a.c-333:hover{ color:#333}
+
+/*辅助色—灰色*/
+.c-666,.c-666 a,a.c-666{color:#666}
+.c-666 a:hover,a.c-666:hover{ color:#666}
+.c-999,.c-999 a,a.c-999{color:#999}
+.c-999 a:hover,a.c-999:hover{color:#999}
+
+/*标准色—红色*/
+.c-red,.c-red a,a.c-red{color:red}
+.c-red a:hover,a.c-red:hover{ color:red}
+/*标准色—绿色*/
+.c-green,.c-green a,a.c-green{color:green}
+.c-red a:hover,a.c-red:hover{color:green}
+/*标准色—蓝色*/
+.c-blue,.c-blue a,a.c-blue{color:blue}
+.c-blue a:hover,a.c-blue:hover{color:blue}
+/*标准色—白色*/
+.c-white,.c-white a,a.c-white{color:white}
+.c-white a:hover,a.c-white:hover{color:white}
+/*标准色—黑色*/
+.c-black,.c-black a{color:black}
+.c-black a:hover,a.c-black:hover{color:black}
+/*标准色—橙色*/
+.c-orange,.c-orange a,a.c-orange{color:orange}
+.c-orange a:hover,a.c-orange:hover{color:orange}
+
+.pagination a,.pagination span{padding:1px 5px;border:1px solid #ddd;display:inline-block}

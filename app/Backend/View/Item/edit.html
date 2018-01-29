@@ -1,0 +1,427 @@
+<include file="Common:header" />
+
+<div class="container" style="margin-top:50px">
+  <div class="row">
+    <form class="form-horizontal" action="{:U('item/edit')}" method="post" id="item-edit" role="form">
+      <div class="form-group">
+        <label class="col-sm-2 control-label" for="item_type"><span class="c-red">*</span>商品类型：</label>
+        <div class="col-sm-10">
+          <input type="text" class="form-control" id="item_type" name="item_type" placeholder="商品类型字符串标识，必须填写" value="{$itemInfo.item_type}" required />
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="col-sm-2 control-label" for="asin">ASIN码：</label>
+        <div class="col-sm-10">
+          <input type="text" class="form-control" id="asin" name="asin" placeholder="如果商品已经上传到亚马逊，可以绑定ASIN码" />
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="col-sm-2 control-label" for="item_sku"><span class="c-red">*</span>商品SKU：</label>
+        <div class="col-sm-10">
+          <input type="text" class="form-control" id="item_sku" name="item_sku" placeholder="商品的SKU，同一个公司的商品SKU唯一，必须填写" value="{$itemInfo.item_sku}" <if condition="$itemInfo.item_sku neq ''">readonly</if> required />
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="col-sm-2 control-label" for="external_product_id">商品外部码：</label>
+        <div class="col-sm-10">
+          <input type="text" class="form-control" id="external_product_id" name="external_product_id" placeholder="指UPC,EAN的值，父商品不需要填写" value="{$itemInfo.external_product_id}" />
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="col-sm-2 control-label" for="external_product_id_type">商品外部码类型：</label>
+        <div class="col-sm-10">
+          <input type="text" class="form-control" id="external_product_id_type" name="external_product_id_type" placeholder="一般填写UPC,EAN，父商品不需要填写" value="{$itemInfo.external_product_id_type}" />
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="col-sm-2 control-label" for="item_name"><span class="c-red">*</span>商品标题：</label>
+        <div class="col-sm-10">
+          <input type="text" class="form-control" id="item_name" name="item_name" placeholder="限制在200字以内" value="{$itemInfo.item_name}" required />
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="col-sm-2 control-label" for="manufacturer"><span class="c-red">*</span>制造商：</label>
+        <div class="col-sm-10">
+          <input type="text" class="form-control" id="manufacturer" name="manufacturer" placeholder="制造商" value="{$itemInfo.manufacturer}" required />
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="col-sm-2 control-label" for="brand_name"><span class="c-red">*</span>品牌名称：</label>
+        <div class="col-sm-10">
+          <input type="text" class="form-control" id="brand_name" name="brand_name" placeholder="品牌名字，可以带上商品关键字" value="{$itemInfo.brand_name}" required />
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="col-sm-2 control-label" for="standard_price"><span class="c-red">*</span>标准价格：</label>
+        <div class="col-sm-10">
+          <input type="text" class="form-control" id="standard_price" name="standard_price" placeholder="商品销售的原始价格，小数点后面可以最多带两位数字" value="{$itemInfo.standard_price}" required />
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="col-sm-2 control-label" for="quantity"><span class="c-red">*</span>商品库存：</label>
+        <div class="col-sm-10">
+          <input type="text" class="form-control" id="quantity" name="quantity" placeholder="库存数量" value="{$itemInfo.quantity}" required />
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="col-sm-2 control-label"><span class="c-red">*</span>商品主图：</label>
+        <div class="col-sm-10">
+          <div class="photo-picker" id="main_image_url_picker">商品主图</div>
+          <div id="main_image_url_picker-container"></div>
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="col-sm-2 control-label"><span class="c-red">*</span>商品副图：</label>
+        <div class="col-sm-10">
+          <div class="row">
+            <div class="col-sm-2">
+              <div class="photo-picker" id="other_image_url1_picker">副图1</div>
+              <div id="other_image_url1_picker-container"></div>
+            </div>
+            <div class="col-sm-2">
+              <div class="photo-picker" id="other_image_url2_picker">副图2</div>
+              <div id="other_image_url2_picker-container"></div>
+            </div>
+            <div class="col-sm-2">
+              <div class="photo-picker" id="other_image_url3_picker">副图3</div>
+              <div id="other_image_url3_picker-container"></div>
+            </div>
+            <div class="col-sm-2">
+              <div class="photo-picker" id="other_image_url4_picker">副图4</div>
+              <div id="other_image_url4_picker-container"></div>
+            </div>
+            <div class="col-sm-2">
+              <div class="photo-picker" id="other_image_url5_picker">副图5</div>
+              <div id="other_image_url5_picker-container"></div>
+            </div>
+            <div class="col-sm-2">
+              <div class="photo-picker" id="other_image_url6_picker">副图6</div>
+              <div id="other_image_url6_picker-container"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="col-sm-2 control-label" for="parent_child"><span class="c-red">*</span>子父商品类型：</label>
+        <div class="col-sm-10">
+          <select class="form-control" name="parent_child" id="parent_child">
+            <option value="">独立商品</option>
+            <option value="Parent">父商品</option>
+            <option value="Child">子商品</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="col-sm-2 control-label" for="parent_sku">父商品SKU：</label>
+        <div class="col-sm-10">
+          <input type="text" class="form-control" id="parent_sku" name="parent_sku" placeholder="如果是子商品，则必须要填写父商品的SKU" value="{$itemInfo.parent_sku}" />
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="col-sm-2 control-label" for="relationship_type">父商品关系标识：</label>
+        <div class="col-sm-10">
+          <input type="text" class="form-control" id="relationship_type" name="relationship_type" placeholder="如果是子父商品关系，一般填写Variation" value="{$itemInfo.relationship_type}" />
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="col-sm-2 control-label" for="variation_theme">父商品关系：</label>
+        <div class="col-sm-10">
+          <input type="text" class="form-control" id="variation_theme" name="variation_theme" placeholder="子商品之间按照什么属性区分，如果是子父商品关系，则子父商品都必须填写相同的关系标识，如按照颜色区分子商品，则填写Color" value="{$itemInfo.variation_theme}" />
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="col-sm-2 control-label" for="part_number">制造商商品编号：</label>
+        <div class="col-sm-10">
+          <input type="text" class="form-control" id="part_number" name="part_number" placeholder="制造商商品编号，有些分类必须填写" value="{$itemInfo.part_number}" />
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="col-sm-2 control-label" for="product_description"><span class="c-red">*</span>商品描述：</label>
+        <div class="col-sm-10">
+          <textarea rows="5" class="form-control" name="product_description" id="product_description" placeholder="支持换行和部分html标签" required>{$itemInfo.product_description}</textarea>
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="col-sm-2 control-label" for="update_delete"><span class="c-red">*</span>商品操作类型：</label>
+        <div class="col-sm-10">
+          <input type="text" class="form-control" id="update_delete" name="update_delete" placeholder="删除商品：Delete 增加修改：Update 部分修改：PartialUpdate" value="{$itemInfo.update_delete}" required />
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label class="col-sm-2 control-label" for="bullet_point1"><span class="c-red">*</span>卖点描述1：</label>
+        <div class="col-sm-10">
+          <input type="text" class="form-control" id="bullet_point1" name="bullet_point1" placeholder="卖点描述1" value="{$itemInfo.bullet_point1}" required />
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="col-sm-2 control-label" for="bullet_point2"><span class="c-red">*</span>卖点描述2：</label>
+        <div class="col-sm-10">
+          <input type="text" class="form-control" id="bullet_point2" name="bullet_point2" placeholder="卖点描述2" value="{$itemInfo.bullet_point2}" required />
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="col-sm-2 control-label" for="bullet_point3"><span class="c-red">*</span>卖点描述3：</label>
+        <div class="col-sm-10">
+          <input type="text" class="form-control" id="bullet_point3" name="bullet_point3" placeholder="卖点描述3" value="{$itemInfo.bullet_point3}" required />
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="col-sm-2 control-label" for="bullet_point4"><span class="c-red">*</span>卖点描述4：</label>
+        <div class="col-sm-10">
+          <input type="text" class="form-control" id="bullet_point4" name="bullet_point4" placeholder="卖点描述4" value="{$itemInfo.bullet_point4}" required />
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="col-sm-2 control-label" for="bullet_point5"><span class="c-red">*</span>卖点描述5：</label>
+        <div class="col-sm-10">
+          <input type="text" class="form-control" id="bullet_point5" name="bullet_point5" placeholder="卖点描述5" value="{$itemInfo.bullet_point5}" required />
+        </div>
+      </div>
+
+
+      <div class="form-group">
+        <label class="col-sm-2 control-label" for="generic_keywords1"><span class="c-red">*</span>搜索关键词1：</label>
+        <div class="col-sm-10">
+          <input type="text" class="form-control" id="generic_keywords1" name="generic_keywords1" placeholder="搜索关键词1" value="{$itemInfo.generic_keywords1}" required />
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="col-sm-2 control-label" for="generic_keywords2">搜索关键词2：</label>
+        <div class="col-sm-10">
+          <input type="text" class="form-control" id="generic_keywords2" name="generic_keywords2" placeholder="搜索关键词2" value="{$itemInfo.generic_keywords2}" />
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="col-sm-2 control-label" for="generic_keywords3">搜索关键词3：</label>
+        <div class="col-sm-10">
+          <input type="text" class="form-control" id="generic_keywords3" name="generic_keywords3" placeholder="搜索关键词3" value="{$itemInfo.generic_keywords3}" />
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="col-sm-2 control-label" for="generic_keywords4">搜索关键词4：</label>
+        <div class="col-sm-10">
+          <input type="text" class="form-control" id="generic_keywords4" name="generic_keywords4" placeholder="搜索关键词4" value="{$itemInfo.generic_keywords4}" />
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="col-sm-2 control-label" for="generic_keywords5">搜索关键词5：</label>
+        <div class="col-sm-10">
+          <input type="text" class="form-control" id="generic_keywords5" name="generic_keywords5" placeholder="搜索关键词5" value="{$itemInfo.generic_keywords5}" />
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label class="col-sm-2 control-label" for="color_name">颜色名称：</label>
+        <div class="col-sm-10">
+          <input type="text" class="form-control" id="color_name" name="color_name" placeholder="颜色名称，可以随便写" value="{$itemInfo.color_name}" />
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="col-sm-2 control-label" for="color_map">标准颜色：</label>
+        <div class="col-sm-10">
+          <input type="text" class="form-control" id="color_map" name="color_map" placeholder="颜色名称所对应的标准颜色名称 Beige, Black, Blue, Brass, Bronze, Brown, Burst, Chrome, Clear, Gold, Gray, Green, Grey, Metallic, Multi-Colored, Natural, Off-white, Orange, Pink, Purple, Red, Silver, White, Yellow" value="{$itemInfo.color_map}" />
+        </div>
+      </div>
+
+
+      <div class="form-group">
+        <label class="col-sm-2 control-label" for="compatible_phone_models1">适合机型1：</label>
+        <div class="col-sm-10">
+          <input type="text" class="form-control" id="compatible_phone_models1" name="compatible_phone_models1" placeholder="适合机型1" value="{$itemInfo.compatible_phone_models1}" />
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="col-sm-2 control-label" for="compatible_phone_models2">适合机型2：</label>
+        <div class="col-sm-10">
+          <input type="text" class="form-control" id="compatible_phone_models2" name="compatible_phone_models2" placeholder="适合机型2" value="{$itemInfo.compatible_phone_models2}" />
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="col-sm-2 control-label" for="compatible_phone_models3">适合机型3：</label>
+        <div class="col-sm-10">
+          <input type="text" class="form-control" id="compatible_phone_models3" name="compatible_phone_models3" placeholder="适合机型3" value="{$itemInfo.compatible_phone_models3}" />
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="col-sm-2 control-label" for="compatible_phone_models4">适合机型4：</label>
+        <div class="col-sm-10">
+          <input type="text" class="form-control" id="compatible_phone_models4" name="compatible_phone_models4" placeholder="适合机型4" value="{$itemInfo.compatible_phone_models4}" />
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="col-sm-2 control-label" for="compatible_phone_models5">适合机型5：</label>
+        <div class="col-sm-10">
+          <input type="text" class="form-control" id="compatible_phone_models5" name="compatible_phone_models5" placeholder="适合机型5" value="{$itemInfo.compatible_phone_models5}" />
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="col-sm-2 control-label" for="compatible_phone_models6">适合机型6：</label>
+        <div class="col-sm-10">
+          <input type="text" class="form-control" id="compatible_phone_models6" name="compatible_phone_models6" placeholder="适合机型6" value="{$itemInfo.compatible_phone_models6}" />
+        </div>
+      </div>
+
+
+      <div class="form-group">
+        <label class="col-sm-2 control-label" for="subject_keywords1">其它关键字1：</label>
+        <div class="col-sm-10">
+          <input type="text" class="form-control" id="subject_keywords1" name="subject_keywords1" placeholder="其它关键字1" value="{$itemInfo.subject_keywords1}" />
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="col-sm-2 control-label" for="subject_keywords2">其它关键字2：</label>
+        <div class="col-sm-10">
+          <input type="text" class="form-control" id="subject_keywords2" name="subject_keywords2" placeholder="其它关键字2" value="{$itemInfo.subject_keywords2}" />
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="col-sm-2 control-label" for="subject_keywords3">其它关键字3：</label>
+        <div class="col-sm-10">
+          <input type="text" class="form-control" id="subject_keywords3" name="subject_keywords3" placeholder="其它关键字3" value="{$itemInfo.subject_keywords3}" />
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="col-sm-2 control-label" for="subject_keywords4">其它关键字4：</label>
+        <div class="col-sm-10">
+          <input type="text" class="form-control" id="subject_keywords4" name="subject_keywords4" placeholder="其它关键字4" value="{$itemInfo.subject_keywords4}" />
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="col-sm-2 control-label" for="subject_keywords5">其它关键字5：</label>
+        <div class="col-sm-10">
+          <input type="text" class="form-control" id="subject_keywords5" name="subject_keywords5" placeholder="其它关键字5" value="{$itemInfo.subject_keywords5}" />
+        </div>
+      </div>
+
+
+      <div class="form-group">
+        <label class="col-sm-2 control-label" for="sale_price">促销价格：</label>
+        <div class="col-sm-10">
+          <input type="text" class="form-control" id="sale_price" name="sale_price" placeholder="相当于促销价" value="{$itemInfo.sale_price}" />
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="col-sm-2 control-label" for="sale_from_date">促销开始时间：</label>
+        <div class="col-sm-10">
+          <input type="text" class="form-control" id="sale_from_date" name="sale_from_date" placeholder="促销开始时间" value="{$itemInfo.sale_from_date}" />
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="col-sm-2 control-label" for="sale_end_date">促销结束时间：</label>
+        <div class="col-sm-10">
+          <input type="text" class="form-control" id="sale_end_date" name="sale_end_date" placeholder="促销结束时间" value="{$itemInfo.sale_end_date}" />
+        </div>
+      </div>
+
+
+      <div class="form-group">
+        <label class="col-sm-2 control-label" for="condition_type"><span class="c-red">*</span>商品新旧标识：</label>
+        <div class="col-sm-10">
+          <input type="text" class="form-control" id="condition_type" name="condition_type" placeholder="商品新旧标识符号 新品为 New" value="{$itemInfo.condition_type}" required />
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="col-sm-2 control-label" for="condition_note">商品新旧说明：</label>
+        <div class="col-sm-10">
+          <input type="text" class="form-control" id="condition_note" name="condition_note" placeholder="商品新旧说明" value="{$itemInfo.condition_note}" />
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="col-sm-2 control-label" for="fulfillment_latency"><span class="c-red">*</span>发货周期：</label>
+        <div class="col-sm-10">
+          <input type="text" class="form-control" id="fulfillment_latency" name="fulfillment_latency" placeholder="从客户下单到可以查出货单号的时间" value="{$itemInfo.fulfillment_latency}" required />
+        </div>
+      </div>
+
+      <div class="form-group">
+        <div class="col-sm-12">
+          <button type="submit" class="btn btn-primary btn-block">提交数据</button>
+        </div>
+      </div>
+
+      <input type="hidden" name="id" value="{$itemInfo.id}" />
+    </form>
+  </div>
+</div>
+<include file="Common:footer" />
+<script type="text/javascript" src="__JS__/ossUploader/webuploader.js"></script>
+<script type="text/javascript" src="__JS__/ossUploader/uploader.js"></script>
+<script type="text/javascript" src="__JS__/ossUploader/image.js"></script>
+<script type="text/javascript">
+  var oss_server = "{:C('OSS_HOST')}",
+      oss_token_api = "{:U('oss/params')}",
+      oss_preview_api = "{:U('oss/photo')}";
+
+  $('#main_image_url_picker').uploader({
+    initData: '{$itemInfo.main_image_url}',
+    multi:false,
+    container:$('#main_image_url_picker-container'),
+    callback: function(imginfo, box) {
+      var input_obj = $('<input type="hidden" name="main_image_url" value="'+imginfo.path+'" />');
+      box.append(input_obj);
+    }
+  });
+  $('#other_image_url1_picker').uploader({
+    initData: '{$itemInfo.other_image_url1}',
+    multi:false,
+    container:$('#other_image_url1_picker-container'),
+    callback: function(imginfo, box) {
+      var input_obj = $('<input type="hidden" name="other_image_url1" value="'+imginfo.path+'" />');
+      box.append(input_obj);
+    }
+  });
+  $('#other_image_url2_picker').uploader({
+    initData: '{$itemInfo.other_image_url2}',
+    multi:false,
+    container:$('#other_image_url2_picker-container'),
+    callback: function(imginfo, box) {
+      var input_obj = $('<input type="hidden" name="other_image_url2" value="'+imginfo.path+'" />');
+      box.append(input_obj);
+    }
+  });
+  $('#other_image_url3_picker').uploader({
+    initData: '{$itemInfo.other_image_url3}',
+    multi:false,
+    container:$('#other_image_url3_picker-container'),
+    callback: function(imginfo, box) {
+      var input_obj = $('<input type="hidden" name="other_image_url3" value="'+imginfo.path+'" />');
+      box.append(input_obj);
+    }
+  });
+  $('#other_image_url4_picker').uploader({
+    initData: '{$itemInfo.other_image_url4}',
+    multi:false,
+    container:$('#other_image_url4_picker-container'),
+    callback: function(imginfo, box) {
+      var input_obj = $('<input type="hidden" name="other_image_url4" value="'+imginfo.path+'" />');
+      box.append(input_obj);
+    }
+  });
+  $('#other_image_url5_picker').uploader({
+    initData: '{$itemInfo.other_image_url5}',
+    multi:false,
+    container:$('#other_image_url5_picker-container'),
+    callback: function(imginfo, box) {
+      var input_obj = $('<input type="hidden" name="other_image_url5" value="'+imginfo.path+'" />');
+      box.append(input_obj);
+    }
+  });
+  $('#other_image_url6_picker').uploader({
+    initData: '{$itemInfo.other_image_url6}',
+    multi:false,
+    container:$('#other_image_url6_picker-container'),
+    callback: function(imginfo, box) {
+      var input_obj = $('<input type="hidden" name="other_image_url6" value="'+imginfo.path+'" />');
+      box.append(input_obj);
+    }
+  });
+
+
+  $(function(){
+    $('#parent_child').val('{$itemInfo.parent_child}');
+    formValidate("item-edit");
+  });
+</script>
+</body>
+</html>

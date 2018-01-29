@@ -1,0 +1,101 @@
+<include file="Common:header" />
+<style>
+  .pagination{margin:10px 0}
+</style>
+
+<div class="container-container">
+  <div class="row mb-10 mt-10">
+    <div class="col-md-12">
+      <div class="pull-left pagination">{$pageStr}</div>
+      <div class="pull-right mt-5">
+          <a href="{:U('item/edit', array('id'=>0))}" class="btn btn-sm btn-default"><i class="fa fa-plus"></i> 添加商品</a>
+		  <div class="btn-group">
+		    <button type="button" class="btn btn-sm btn-default dropdown-toggle btn-block" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+		      导出数据<span class="caret"></span>
+		    </button>
+		    <ul class="dropdown-menu dropdown-menu-left">
+		      <volist name="templateList" id="tpl">
+		      <li><button type="button" class="btn btn-sm btn-default btn-link batchExport" href="{:U('item/export', array('template_id'=>$tpl[id]))}">{$tpl.name}</button></li>
+		      </volist>
+		    </ul>
+		  </div>
+
+        
+      </div>
+    </div>
+  </div>
+
+
+  <table id="photo-list" class="table table-border table-bordered table-bg table-hover table-order-sort">
+    <thead>
+    <tr>
+      <th width="5%"><input type="checkbox" id="selectAll" value="0"></th>
+      <th width="10%">状态</th>
+      <th width="5%">图片</th>
+      <th width="10%">分类</th>
+      <th width="30%">商品名称</th>
+      <th width="5%">价格</th>
+      <th width="5%">库存</th>
+      <th width="10%">用户</th>
+      <th width="10%">操作</th>
+    </tr>
+    </thead>
+    <tbody>
+    <include file="Item:list" />
+    </tbody>
+  </table>
+  <div class="pull-right pagination">{$pageStr}</div>
+</div>
+
+<include file="Common:footer" />
+
+<script type="text/javascript">
+  $('#selectAll').bind('click', function(){
+    var val = $(this).prop('checked');
+    $('.item_ids').prop('checked', val);
+  });
+  $('.batchExport').bind('click', function(){
+    var ids = '';
+    $.each($('.item_ids'), function(){
+      if($(this).prop('checked')){
+        ids += ','+$(this).val();
+    console.log(ids)
+      }
+    })
+    var href=$(this).attr('href')+'&item_ids='+ids;
+    window.open(href);
+    return true;
+  });
+  
+  $('.item-parent').bind('click', function(){
+    var href=$(this).attr('_href');
+    var that = $(this);
+    var parentSku = $(this).attr('_sku');
+    var loadChild = $(this).attr('_loadchild');
+    var expand = $(this).attr('_expand');
+    
+    if(loadChild == 'false'){
+      $.ajax({
+        type: 'GET',
+        dataType: 'html',
+        url: href,
+        success: function(data){
+          that.attr('_loadchild', 'true');
+          that.attr('_expand', 'true');
+          $(data).insertAfter($('tr#item-'+parentSku));
+        }
+      });
+    }else{
+      if(expand == 'true'){
+        $('tr.parent-'+parentSku).hide();
+        that.attr('_expand', 'false');
+      }else{
+        $('tr.parent-'+parentSku).show();
+        that.attr('_expand', 'true');
+      }
+    }
+    return false;
+  });
+</script>
+</body>
+</html>

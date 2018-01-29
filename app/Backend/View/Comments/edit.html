@@ -1,0 +1,76 @@
+<include file="Common:header" />
+
+<div class="container" style="margin-top:50px">
+  <div class="row">
+    <div class="col-md-12">
+      <form action="{:U('comments/edit')}" method="post" id="form-category-edit" onsubmit="return comment($this)">
+        <input type="hidden" name="is_add" value="{$is_add}">
+        <div class="form-group">
+          <label for="title"><span class="c-red">*</span>用户名：</label>
+          <!--<input type="hidden" class="form-control" autocomplete="off" name="user_id"  value="{$comment.user_id}" />-->
+          <!--<input type="text" class="form-control" autocomplete="off" name="title" id="title" value="{$goods.goods_name}" required />-->
+            <input type="text" class="form-control" autocomplete="off" name="user_name"  value="{$comment.username}" />
+            <input type="hidden" name="is_add" value="{$is_add}">
+            <input type="hidden" name="id" value="{$comment.id}"/>
+        </div>
+        <div class="form-group">
+          <label for="title"><span class="c-red">*</span>模具：</label>
+          <select name="cat_id" id="cat">
+            <option value="0">请选择模具</option>
+            <volist name="goods_list" id="goods">
+              <option value="{$goods.goods_id}" <if condition="$comment.goods_id eq $goods.goods_id ">selected</if>>{$goods.goods_name}</option>
+            </volist>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="title"><span class="c-red">*</span>内容：</label>
+          <input type="text" class="form-control" autocomplete="off" name="content" id="content" value="{$comment.content}" required />
+        </div>
+        <div class="form-group">
+          <button class="btn btn-primary" type="submit">保存</button>
+        </div>
+
+        <!--<input type="hidden" name="id" value="{$goods.id}" />-->
+      </form>
+    </div>
+  </div>
+</div>
+<include file="Common:footer" />
+<script type="text/javascript" src="__JS__/ossUploader/webuploader.js"></script>
+<script type="text/javascript" src="__JS__/ossUploader/uploader.js"></script>
+<script type="text/javascript">
+  var oss_server = "{:C('OSS_HOST')}",
+      oss_token_api = "{:U('oss/params')}",
+      oss_preview_api = "{:U('oss/photo')}";
+
+  $('#create-photo-picker').uploader({
+    initData: "{$sideInfo[create_photo]}",
+    multi:false,
+    container:$('#create-photo-container'),
+    imagedir: 'mould',
+    callback: function(imginfo, box) {
+      var input_obj = $('<input type="hidden" name="create_photo" value="'+imginfo.path+'" />');
+      box.append(input_obj);
+      box.find('img').css('max-width', '200px').css('width', '100%');
+    }
+  });
+  $('#design-photo-picker').uploader({
+    initData: "{$goods[goods_img]}",
+    multi:false,
+    container:$('#design-photo-container'),
+    imagedir: 'mould',
+    callback: function(imginfo, box) {
+      var input_obj = $('<input type="hidden" name="design_photo" value="'+imginfo.path+'" />');
+      box.append(input_obj);
+      box.find('img').css('max-width', '200px').css('width', '100%');
+    }
+  });
+  function comment() {
+      var
+  }
+  $(function(){
+    formValidate("mould-edit");
+  });
+</script>
+</body>
+</html>

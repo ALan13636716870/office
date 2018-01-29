@@ -1,0 +1,42 @@
+<volist name="itemList" id="item">
+  <tr <if condition="$item.parent_child eq 'Parent'">id="item-{$item.item_sku}"<else />class="parent-{$item.parent_sku}"</if>>
+    <td><input type="checkbox" class="item_ids" name="item_ids[]" value="{$item.id}" /></td>
+    <td>
+      <if condition="$item.parent_child eq 'Parent'">
+        <a href="javascript:;" class="item-parent" _loadchild="false" _expand="false" _sku="{$item.item_sku}" _href="{:U('item/index', array('parent'=>$item[item_sku]))}"><i class="fa fa-chevron-right"></i></a> 
+        <strong>Variation ({$item.child_num})</strong>
+      <else />
+        <p class="text-right">Active</p>
+      </if>
+    </td>
+    <td><a href="{$item.main_image_url|getImageUrl}" target="_blank"><img src="{$item.main_image_url|getImageUrl=###,80}" /></a></td>
+    <td>{$item.item_type}</td>
+    <td><a href="javascript:;">{$item.item_name}</a><br />
+      <span class="c-333">SKU: {$item.item_sku}</span><br />
+      <if condition="$item.external_product_id neq ''">
+      <span class="c-333">UPC: {$item.external_product_id}</span><br />
+      </if>
+      <if condition="$item.asin neq ''">
+      <span class="c-333">ASIN: {$item.asin}</span>
+      </if>
+    </td>
+    <td>{$item.standard_price}</td>
+    <td>{$item.quantity}</td>
+    <td>{$item.user_name}<br /><span class="c-999">{$item.add_time|date='Y-m-d H:i',###}</span></td>
+    <td>
+      <div class="btn-group btn-block">
+        <button type="button" class="btn btn-sm btn-default dropdown-toggle btn-block" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          操作<span class="caret"></span>
+        </button>
+        <ul class="dropdown-menu dropdown-menu-left">
+          <li><a href="{:U('item/edit', array('id'=>$item['id']))}" target="_blank">编辑</a></li>
+          <if condition="$item.parent_child eq 'Parent'">
+          <li><a href="{:U('item/edit', array('parent'=>$item['id']))}" target="_blank">添加子商品</a></li>
+          </if>
+          <li><a href="{:U('item/edit', array('copy'=>$item['id']))}" target="_blank">复制商品</a></li>
+          <li><a href="{:U('item/delete', array('id'=>$item['id']))}" onclick="return confirm('确认要删除吗？');" target="_blank">删除</a></li>
+        </ul>
+      </div>
+    </td>
+  </tr>
+</volist>

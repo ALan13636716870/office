@@ -1,0 +1,41 @@
+<include file="Common:header" />
+
+<div class="container" style="margin-top:50px">
+  <div class="row">
+    <div class="col-md-12">
+      <form action="{:U('model/cat_edit')}" method="post" id="form-category-edit">
+        <!--<div class="form-group">-->
+          <!--<label for="parent_id"><span class="c-red">*</span>上级分类：</label>-->
+          <!--<select name="parent_id" id="parent_id" class="form-control" required>-->
+            <!--<option value="0">顶级分类</option>-->
+            <!--<volist name="category_list" id="category">-->
+              <!--<option value="{$category.id}">{$category.name}</option>-->
+            <!--</volist>-->
+          <!--</select>-->
+        <!--</div>-->
+        <input type="hidden" name="cat_id" value="{$category.cat_id}">
+        <div class="form-group">
+          <label for="name"><span class="c-red">*</span>名称：</label>
+          <input type="text" class="form-control" autocomplete="off" name="name" id="name" value="{$category.cat_name}" required />
+        </div>
+        <div class="form-group">
+          <label for="display_order">排序：</label>
+          <input type="text" class="form-control" autocomplete="off" name="display_order" id="display_order" value="{$category.display_order}" />
+        </div>
+        <div class="form-group">
+          <button class="btn btn-primary" type="submit">保存</button>
+        </div>
+        <input type="hidden" name="id" value="{$category_info.id}" />
+      </form>
+    </div>
+  </div>
+</div>
+<include file="Common:footer" />
+<script type="text/javascript">
+  $(function(){
+    $('#parent_id').val('{$category_info.parent_id}');
+    formValidate("form-category-edit");
+  });
+</script>
+</body>
+</html>

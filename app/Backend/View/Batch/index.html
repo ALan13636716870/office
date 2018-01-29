@@ -1,0 +1,48 @@
+<include file="Common:header" />
+
+<div class="container">
+  <div class="row">
+    <div class="col-md-12">
+      <h4>批次管理</h4>
+      <p><code>每一次上传Excel就是一个批次==========每生成图片和标题之前必须要激活一个批次来与之对应</code></p>
+      <a href="{:U('batch/edit', array('id'=>0))}" class="btn"><i class="fa fa-plus"></i> 添加批次</a>
+    </div>
+  </div>
+
+  <table id="batch-list" class="table table-border table-bordered table-bg table-hover table-order-sort">
+    <thead>
+    <tr>
+      <th width="10%">批次名称</th>
+      <th width="10%">品牌名字</th>
+      <th width="25%">标题模板</th>
+      <th width="5%">激活</th>
+      <th width="5%">模具数</th>
+      <th width="10%">添加时间</th>
+      <th width="10%">操作</th>
+    </tr>
+    </thead>
+    <tbody>
+    <volist name="batchList" id="batch">
+      <tr>
+        <td>{$batch.batch_no}</td>
+        <td>{$batch.brand_name}</td>
+        <td>{$batch.title_template}</td>
+        <td>{$batch.is_active}</td>
+        <td><php>echo count(explode(',', $batch['mould_ids']));</php></td>
+        <td>{$batch.add_time|date='Y-m-d H:i',###}</td>
+        <td>
+          <a href="{:U('batch/edit', array('batch_id'=>$batch['id']))}">编辑</a>
+          <a href="{:U('batch/delete', array('batch_id'=>$batch['id']))}" onclick="return confirm('确认要删除吗？');">删除</a>
+        </td>
+      </tr>
+    </volist>
+    </tbody>
+  </table>
+</div>
+
+<include file="Common:footer" />
+<script type="text/javascript">
+
+</script>
+</body>
+</html>

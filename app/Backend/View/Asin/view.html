@@ -1,0 +1,29 @@
+<include file="Common:header" />
+
+
+<div class="container-fluid" style="margin-top:20px;">
+  <h5>{$asin}</h5>
+
+  <ul id="myTab" class="nav nav-tabs">
+    <volist name="dataArr" id="data">
+    <li><a href="#{$key}" data-toggle="tab">{$key}</a></li>
+    </volist>
+  </ul>
+  <div id="myTabContent" class="tab-content">
+    <volist name="dataArr" id="data">
+    <div class="tab-pane" id="{$key}">
+        <pre>{$data}</pre>
+    </div>
+    </volist>
+  </div>
+</div>
+
+<include file="Common:footer" />
+<script type="text/javascript">
+  $('#myTab a').click(function (e) {
+    e.preventDefault()
+    $(this).tab('show');
+  })
+</script>
+</body>
+</html>

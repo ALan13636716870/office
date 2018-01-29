@@ -1,0 +1,104 @@
+<include file="Common:header" />
+
+<div class="container" style="margin-top:50px">
+  <div class="row">
+    <div class="col-md-6">
+      <form action="{:U('mould/edit')}" method="post" id="form-category-edit">
+        <div class="form-group">
+          <label for="title"><span class="c-red">*</span>标题：</label>
+          <input type="text" class="form-control" autocomplete="off" name="title" id="title" value="{$mould_info.title}" required />
+        </div>
+        <div class="form-group">
+          <label for="category_id"><span class="c-red">*</span>产品：</label>
+          <select name="category_id" id="category_id" class="form-control" required>
+            <option value="">选择产品</option>
+            <volist name="category_list" id="category">
+              <if condition="$category.level eq 1"><optgroup label="{$category.name}"></optgroup>
+              <else />
+              <option value="{$category.id}"> &nbsp; &nbsp; {$category.name}</option>
+              </if>
+            </volist>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="group_name">分组：</label>
+          <input type="text" class="form-control" autocomplete="off" name="group_name" id="group_name" value="{$mould_info.group_name}" />
+        </div>
+        <div class="form-group">
+          <label for="group_name">系列：</label>
+          <input type="text" class="form-control" autocomplete="off" name="series" id="series" value="{$mould_info.series}" />
+        </div>
+		<div class="form-group">
+          <label for="size">尺码列表：</label>
+          <textarea class="form-control" rows="4" name="size" id="size" placeholder="一行一个">{$mould_info.size}</textarea>
+        </div>
+        <div class="form-group">
+          <label for="material">材质：</label>
+		  <volist name="attribute['Mould']" id='mould'><br />
+          <input type="radio" autocomplete="off" name="material" id="material" value="{$mould['id']}" {:checked($mould_info['material'],$mould['id'])} /><span>{$mould['value']}</span>
+		  </volist>
+        </div>
+        <div class="form-group">
+          <label for="color">颜色：</label>
+		  <volist name="attribute['Color']" id='color'><br />
+          <input type="radio"  autocomplete="off" name="color" id="color_{$color['id']}" value="{$color['id']}"  {:checked($mould_info['color'],$color['id'])}  /><label for="color_{$color['id']}">{$color['value']}</label>
+		  </volist>
+        </div>
+        
+        <div class="form-group">
+          <label for="style">款式：</label>
+		  <volist name="attribute['Model']" id='model'><br />
+          <input type="radio" autocomplete="off" name="style" id="style" value="{$model['id']}" {:checked($mould_info['style'],$model['id'])} /><span>{$model['value']}</span>
+		  </volist>
+        </div>
+
+        <div class="form-group clearfix">
+          <label>预览图：</label>
+          <div class="photo-picker" id="ppicker">预览图</div>
+          <div id="ppicker-container"></div>
+        </div>
+        <div class="form-group">
+          <label for="title">是否可用：</label>
+          <input type="text" class="form-control" autocomplete="off" name="status" id="status" value="{$mould_info.status}" />
+        </div>
+        <div class="form-group">
+          <button class="btn btn-primary" type="submit">保存</button>
+        </div>
+        <input type="hidden" name="id" value="{$mould_info.id}" />
+      </form>
+    </div>
+    <div class="col-md-6">
+      <h4>该产品已存在的分组</h4>
+      <ul>
+        <volist name="group_list" id="group">
+        <li>{$group.group_name}</li>
+        </volist>
+      </ul>
+    </div>
+  </div>
+</div>
+<include file="Common:footer" />
+<script type="text/javascript" src="__JS__/ossUploader/webuploader.js"></script>
+<script type="text/javascript" src="__JS__/ossUploader/uploader.js"></script>
+<script type="text/javascript">
+  var oss_server = "{:C('OSS_HOST')}",
+      oss_token_api = "{:U('oss/params')}",
+      oss_preview_api = "{:U('oss/photo')}";
+
+  $('#ppicker').uploader({
+    initData: '{$mould_info[photo]}',
+    multi:false,
+    container:$('#ppicker-container'),
+    callback: function(imginfo, box) {
+      var input_obj = $('<input type="hidden" name="photo" value="'+imginfo.path+'" />');
+      box.append(input_obj);
+    }
+  });
+
+  $(function(){
+    $('#category_id').val('{$mould_info.category_id}');
+    formValidate("mould-edit");
+  });
+</script>
+</body>
+</html>

@@ -1,0 +1,49 @@
+<include file="Common:header" />
+
+<div class="container">
+  <div class="row">
+    <div class="col-md-12">
+      <h4>模具面：
+        <a href="{:U('mould/index', array('category_id'=>$categoryInfo[id]))}">{$categoryInfo.name}</a>
+        > {$mouldInfo.title}</h4>
+      <!--<a href="{:U('mould/add', array('id'=>0,'cat_id'=>$cat_id))}" class="btn"><i class="fa fa-plus"></i> 添加面</a>-->
+    </div>
+  </div>
+
+  <table id="mould-list" class="table table-border table-bordered table-bg table-hover table-order-sort">
+    <thead>
+    <tr>
+      <th width="5%">ID</th>
+      <th width="10%">姓名</th>
+      <th width="10%">金额</th>
+      <th width="15%">地址</th>
+      <th width="10%">邮箱</th>
+      <th width="10%">商品数量</th>
+      <th width="10%">邮编</th>
+      <th width="10%">订单进度</th>
+      <th width="10%">操作</th>
+    </tr>
+    </thead>
+    <tbody>
+    <volist name="flowList" id="flow">
+      <tr>
+        <td>{$flow.order_id}</td>
+        <td>{$flow.username}</td>
+        <td>{$flow.formatted_goods_price}</td>
+        <td>{$flow.country} {$flow.city}</td>
+        <td>{$flow.email}</td>
+        <td>{$flow.nums}</td>
+        <td>{$flow.zipcode}</td>
+        <td>{$flow.is_sub}</td>
+        <td><a href="{:U('flow/edit', array('id'=>$flow[order_id]))}">查看详情</a></td>
+        <!--<a href="{:U('mould/delete', array('cat_id'=>$cat_id, 'id'=>$side['id']))}" onclick="return confirm('确认要删除吗？');">删除</a></td>-->
+      </tr>
+    </volist>
+
+    </tbody>
+  </table>
+</div>
+
+<include file="Common:footer" />
+</body>
+</html>

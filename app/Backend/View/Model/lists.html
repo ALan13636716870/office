@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="zh-cmn-Hans">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <link rel="stylesheet" href="__JS__/bootstrap/css/bootstrap.min.css">
+  <link rel="stylesheet" href="__CSS__/oms.css">
+  <title>{:C('OFFICE_NAME')}</title>
+</head>
+<body>
+
+<div class="container-fluid" style="margin-bottom:50px">
+  <div class="row">
+    <foreach name="mouldList" key="key" item="size">
+      <h2 style="display:block;width:100%;clear:both;color:#f00">{$key}</h2>
+      <volist name="size" id="mould">
+        <div class="col-md-2" style="padding:0">
+          <section style="border:1px solid #444444">
+          <volist name="mould.photo_list" id="photo">
+            <img src="{$photo}" class="img-responsive" />
+          </volist>
+          <br />
+          <label>m{$mould.mould_id}({$mould.mould_status}) - s{$mould.side_id}({$mould.side_status}) </label><br /> 
+            {$mould.category}<br />{$mould.mould_name} - {$mould.side_name}<br />
+            颜色: {$mould.color}<br />
+            材质: {$mould.material}<br />
+          模具尺寸: {$mould.mould_width}x{$mould.mould_height}<br />
+          设计图尺寸: {$mould.width}x{$mould.height}<br />
+          坐标: {$mould.coordinate_start}-{$mould.coordinate_end}<br />
+          </section>
+        </div>
+      </volist>
+    </foreach>
+  </div>
+</div>
+
+<script type="text/javascript" src="__JS__/jquery.min.js"></script>
+<script type="text/javascript" src="__JS__/bootstrap/js/bootstrap.min.js"></script>
+</body>
+</html>

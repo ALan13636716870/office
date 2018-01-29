@@ -1,0 +1,129 @@
+<include file="Common:header" />
+
+<div class="container" style="margin-top:50px">
+  <div class="row">
+    <form action="{:U('photo/edit')}" method="post" id="photo-edit">
+      <div class="col-md-4">
+        <div class="form-group">
+          <label for="title"><span class="c-red">*</span>标题：</label>
+          <input type="text" class="form-control" autocomplete="off" name="title" id="title" value="{$photoInfo.title}" required />
+        </div>
+        <div class="form-group">
+          <label for="title">额外关键字(相比较分类,用换行隔开多个)：</label>
+          <textarea class="form-control" rows="4" name="keywords" id="keywords" placeholder="一行一个">{$photoInfo.keywords}</textarea>
+        </div>
+        <div class="form-group">
+          <button class="btn btn-primary" type="submit">保存</button>
+        </div>
+      </div>
+
+      <div class="col-md-6">
+        <div class="form-group clearfix">
+          <label>预览图(原始图)：</label>
+          <div class="photo-picker" id="ppicker">原始图</div>
+          <div id="ppicker-container"></div>
+        </div>
+        <div class="form-group clearfix" <if condition="$photoInfo.id eq 0">style="display:none"</if>>
+          <label>设计图列表：</label>
+          <div class="photo-picker" id="photo-picker">设计图</div>
+          <div id="photo-picker-container"></div>
+        </div>
+      </div>
+      <div class="col-md-2">
+        <h4>所有模具支持的大小</h4>
+        <ul>
+        <volist name="sizeList" id="size">
+          <li>{$size.width} * {$size.height}</li>
+        </volist>
+        </ul>
+      </div>
+      <input type="hidden" name="id" value="{$photoInfo.id}" />
+      <input type="hidden" name="topic_id" value="{$topicId}" />
+    </form>
+  </div>
+</div>
+<include file="Common:footer" />
+<script type="text/javascript" src="__JS__/ossUploader/webuploader.js"></script>
+<script type="text/javascript" src="__JS__/ossUploader/uploader.js"></script>
+<script type="text/javascript" src="__JS__/ossUploader/image.js"></script>
+<script type="text/javascript">
+  var oss_server = "{:C('OSS_HOST')}",
+      oss_token_api = "{:U('oss/params')}",
+      oss_preview_api = "{:U('oss/photo')}";
+
+  $('#ppicker').uploader({
+    initData: '{$photoInfo[origin_photo]}',
+    multi:false,
+    imagedir:'gallery',
+    container:$('#ppicker-container'),
+    callback: function(imginfo, box) {
+      var input_obj = $('<input type="hidden" name="photo" value="'+imginfo.path+'" />');
+      box.append(input_obj);
+    }
+  });
+
+
+  $('#photo-picker').uploader({
+    initData: {$designPhoto},
+    multi:true,
+    imagedir: 'design',
+    field:'design_id',
+    container:$('#photo-picker-container'),
+    callback: function(imginfo, box) {
+      if (imginfo.uploaded == false) {
+        box.append('<br />'+imginfo.width+' * '+imginfo.height);
+        box.find('img').attr('_id', imginfo.id);
+      }else{
+        var imgurl = oss_preview_api+'&path='+imginfo.path;
+        imgReady(imgurl, function () {
+          var width = this.width,height=this.height;
+          box.append('<br />'+width+'*'+height);
+          $.ajax({
+            type: 'POST',
+            dataType: 'json',
+            url: "{:U('photo/saveDesign')}",
+            data: {photo_id:"{$photoInfo.id}", width:width, height:height,path:imginfo.path},
+            success: function(data){
+              if(data.status == '0'){
+                alert(data.msg);
+              }else{
+                box.find('img').attr('_id', data.id);
+                alert('上传成功');
+                //自动生成图片
+                $.ajax({
+                  type: 'POST',
+                  dataType: 'json',
+                  url: "{:U('photo/createProduct')}",
+                  data:{id:data.id},
+                  success: function(dataa){}
+                });
+              }
+            }
+          });
+        });
+      }
+    },
+    delcallback: function(imginfo,box){
+      var id = box.find('img').attr('_id');
+      $.ajax({
+        type: 'POST',
+        dataType: 'json',
+        url: "{:U('photo/deleteDesign')}",
+        data: {design_id:id},
+        success: function(data){
+          if(data.status == '0'){
+            alert(data.msg);
+          }else{
+            alert('删除成功');
+          }
+        }
+      });
+    }
+  });
+
+  $(function(){
+    formValidate("photo-edit");
+  });
+</script>
+</body>
+</html>

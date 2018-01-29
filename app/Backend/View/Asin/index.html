@@ -1,0 +1,89 @@
+<include file="Common:header" />
+<style>
+  .pagination{margin:10px 0}
+  del{color:#ddd;}
+</style>
+
+<div class="container-container" style="margin-top:20px;">
+  <h5>ASIN数据分析</h5>
+
+  <div class="row">
+    <div class="col-md-8"><div class="pagination">{$pageStr}</div></div>
+    <div class="col-md-4">
+      <form class="form-inline" method="get" action="index.php">
+        <input type="hidden" name="c" value="asin" />
+        <input type="hidden" name="a" value="index" />
+        <div class="form-group">
+          <input type="text" class="form-control" id="asin" name="asin" placeholder="ASIN码" value="{$asin}">
+        </div>
+        <div class="form-group">
+          <select class="form-control" id="market" name="market">
+            <option value="">请选择市场</option>
+            <volist name="marketList" id="mname">
+              <option value="{$key}">{$mname}</option>
+            </volist>
+          </select>
+        </div>
+        <button type="submit" class="btn btn-default">搜索</button>
+      </form>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-10">
+      <table id="asin-list" class="table table-border table-bordered table-bg table-hover table-order-sort mt-10">
+        <thead>
+        <tr>
+          <th width="60%">商品基本信息</th>
+          <th width="15%">类目</th>
+          <th>市场</th>
+          <th>操作</th>
+        </tr>
+        </thead>
+        <tbody>
+        <volist name="asinList" id="asin">
+          <tr>
+            <td>
+              <div class="media">
+                  <a href="javascript:;" class="media-left media-middle media-bottom">
+                      <if condition="$asin[photo] neq ''"><img src="{$asin.photo}" width="100"/></if>
+                  </a>
+                  <div class="media-body">
+                      <h4 class="media-heading">{$asin.asin}</h4>
+                      <p>{$asin.title}</p>
+                  </div>
+              </div>
+            </td>
+            <td>{$asin.node_name}</td>
+            <td>{$asin.market}</td>
+            <td><a href="{:U('asin/view', array('id'=>$asin[id]))}" target="_black">查看</a></td>
+          </tr>
+        </volist>
+        </tbody>
+      </table>
+      <div class="pull-right pagination">{$pageStr}</div>
+    </div>
+    <div class="col-md-2">
+      <div class="photo-picker" id="asin-picker">上传文件</div>
+      <div id="asin-picker-container" style="height:150px;overflow-y:scroll;"></div>
+    </div>
+  </div>
+</div>
+
+<include file="Common:footer" />
+<script type="text/javascript" src="/assets/js/localUploader/webuploader.js"></script>
+<script type="text/javascript" src="/assets/js/localUploader/uploader.js?2017122202"></script>
+<script type="text/javascript">
+var upload_url = "{:U('asin/upload')}";
+
+$('#asin-picker').uploader({
+  container:$('#asin-picker-container'),
+  callback: function(info, box) {
+  }
+});
+
+$('#market').val('{$market}');
+
+</script>
+</body>
+</html>

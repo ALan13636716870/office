@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="zh-cmn-Hans">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <link rel="stylesheet" href="__JS__/bootstrap/css/bootstrap.min.css">
+  <link rel="stylesheet" href="__CSS__/oms.css">
+  <title>{:C('OFFICE_NAME')}</title>
+</head>
+<body>
+
+<section class="container">
+  <div class="row">
+    <h1 class="col-md-12 text-center">{:C('OFFICE_NAME')} <small>{:C('OFFICE_VERSION')}</small></h1>
+    <div class="col-md-4 col-md-offset-4">
+        <form action="{:U('account/signin')}" method="post">
+          <div class="form-group row">
+            <label for="office_username" class="sr-only">用户名</label>
+            <div class="col-md-12">
+              <input type="text" name="office_username" id="office_username" class="form-control" placeholder="用户名" />
+            </div>
+          </div>
+          <div class="form-group row">
+            <label for="office_password" class="sr-only">密码</label>
+            <div class="col-md-12">
+              <input type="password" name="office_password" id="office_password" class="form-control" placeholder="密码" />
+            </div>
+          </div>
+          <div class="form-group row">
+            <label for="verify-code" class="sr-only">验证码</label>
+            <div class="col-md-12">
+              <div class="input-group">
+                <input type="text" name="verify_code" id="verify-code" class="form-control" placeholder="验证码" />
+                <span class="input-group-btn"><img src="{:U('account/verify')}" id="verify-img" /></span>
+              </div>
+            </div>
+          </div>
+          <div class="form-group row">
+            <div class="col-md-12">
+              <button class="btn btn-md btn-primary btn-block" type="submit">登 录</button>
+            </div>
+          </div>
+        </form>
+    </div>
+  </div>
+</section>
+
+<script type="text/javascript" src="__JS__/jquery.min.js"></script>
+<script type="text/javascript" src="__JS__/bootstrap/js/bootstrap.min.js"></script>
+<script type="text/javascript">
+  $('#verify-img').bind('click', function(){
+    $(this).attr("src", "{:U('account/verify')}#"+Math.random());
+  });
+</script>
+
+</body>
+</html>

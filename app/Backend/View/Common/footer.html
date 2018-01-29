@@ -1,0 +1,31 @@
+<footer class="footer"></footer>
+
+<script type="text/javascript" src="__JS__/jquery.min.js"></script>
+<script type="text/javascript" src="__JS__/bootstrap/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="__JS__/oms.js"></script>
+<script type="text/javascript" src="__JS__/jQuery-Validation/jquery.validate.min.js"></script>
+<script type="text/javascript" src="__JS__/jQuery-Validation/localization/messages_zh.min.js"></script>
+<script type="text/javascript" src="__JS__/layer/layer.js"></script>
+<script type="text/javascript" src="__JS__/datatables/1.10.0/jquery.dataTables.min.js"></script>
+<script type="text/javascript" src="__JS__/My97DatePicker/WdatePicker.js"></script>
+<script type="text/javascript" src="__JS__/lazyload.min.js"></script>
+<script type="text/javascript">
+var iframe_params = {};
+function callParentBack(func){
+    eval('if(typeof '+func+'=="function")'+func+'()');
+}
+function navActive(){
+  var navId = $('#navlink-{$Think.const.CONTROLLER_NAME}-{$Think.const.ACTION_NAME}');
+  if(navId.length){
+    navId.addClass('active').parents('li').addClass('active');
+  }
+}
+navActive();
+$('#btn-modify-profile').bind('click', function(){
+  var url = "{:U('my/profile')}";
+  layer_show('个人资料修改',url,500);
+});
+$(function() {
+  $("img.lazy").lazyload();
+});
+</script>

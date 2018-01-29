@@ -1,0 +1,44 @@
+<include file="Common:header" />
+
+<div class="container">
+  <div class="row">
+    <div class="col-md-12">
+      <h4><if condition="$parentId eq 0">产品列表<else />"{$topCategory.name}"型号列表</if></h4>
+      <a href="{:U('category/edit?id=0')}" class="btn"><i class="fa fa-plus"></i> 添加产品</a>
+      <a href="{:U('mould/cache')}" class="btn pull-right">缓存产品</a>
+    </div>
+  </div>
+
+  <table id="company-category-list" class="table table-border table-bordered table-bg table-hover table-order-sort">
+    <thead>
+    <tr>
+      <th width="5%">ID</th>
+      <th width="25%">名称</th>
+      <th width="5%">模具个数</th>
+      <th width="10%">操作</th>
+    </tr>
+    </thead>
+    <tbody>
+    <volist name="categoryList" id="category">
+      <tr>
+        <td>{$category.cat_id}</td>
+        <td>{$category.cat_name}</td>
+        <td align="center">{$category.mould_nums}</td>
+        <td>
+          <a href="{:U('model/cat_edit')}&id={$category.cat_id}">编辑</a>
+          <!--<a href="{:U('category/delete')}&id={$category.id}" onclick="return confirm('确定是否删除吗？');">删除</a>-->
+          <if condition="$parentId eq 0">
+            <a href="{:U('mould/index')}&id={$category.cat_id}">型号列表</a>
+          <else />
+            <a href="{:U('mould/index')}&category_id={$category.cat_id}">模具列表</a>
+          </if>
+        </td>
+      </tr>
+    </volist>
+    </tbody>
+  </table>
+</div>
+
+<include file="Common:footer" />
+</body>
+</html>

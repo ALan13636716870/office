@@ -1,0 +1,64 @@
+<include file="Common:header" />
+
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-md-12">
+      <a href="{:U('mould/edit',array('id'=>0,'category_id'=>$categoryId))}" class="btn"><i class="fa fa-plus"></i> 添加模具</a>
+    </div>
+  </div>
+
+  <table id="mould-list" class="table table-border table-bordered table-bg table-hover table-order-sort">
+    <thead>
+    <tr>
+      <th width="5%">ID</th>
+      <th width="5%">产品</th>
+      <th width="10%">模具名称</th>
+      <th width="5%">分组</th>
+      <th width="5%">系列</th>
+      <th width="10%">材质</th>
+      <th width="5%">颜色</th>
+      <th width="5%">尺码</th>
+      <th width="5%">款式</th>
+      <th width="5%">面数</th>
+      <th width="5%">可用</th>
+      <th width="8%">操作</th>
+    </tr>
+    </thead>
+    <tbody>
+    <volist name="mouldList" id="mould">
+      <tr>
+        <td>{$mould.id}</td>
+        <td>{$mould.cat_name}</td>
+        <td>{$mould.title}</td>
+        <td>{$mould.group_name}</td>
+        <td>{$mould.series}</td>
+        <td>{$mould.material}</td>
+        <td>{$mould.color}</td>
+        <td>{$mould.size|nl2br}</td>
+        <td>{$mould.style}</td>
+        <td>{$mould.side_nums}</td>
+        <td>{$mould.status}</td>
+        <td>
+          <a href="{:U('model/edit', array('id'=>$mould['id']))}">编辑</a>
+          <!--<a href="{:U('model/delete', array('id'=>$mould['id']))}" onclick="return confirm('确认要删除吗？');">删除</a>-->
+          <a href="{:U('mould/index', array('mould_id'=>$mould['id']))}">面列表</a>
+        </td>
+      </tr>
+    </volist>
+    </tbody>
+  </table>
+</div>
+
+<include file="Common:footer" />
+<script type="text/javascript">
+  $(document).delegate(".topicAddBtn","click",function(){
+    var url = "{:U('topic/edit')}&parent_id="+$(this).attr('_id');
+    layer_show('添加新主题',url,500);
+  }).delegate("#searchBtn","click",function(){
+    var params = $('#form-search').serialize();
+    dataTable.ajax.url("{:U('topic/ajaxload')}&"+params).load();
+  });
+
+</script>
+</body>
+</html>

@@ -1,0 +1,17 @@
+<include file="Common:header_simple" />
+<div class="text-center"><h2>处理成功，窗口稍后关闭</h2><p>{$msg}</p></div>
+<include file="Common:footer_simple" />
+<script type="text/javascript">
+function shutMwsDialog(){
+    var cb = '{$callback}';
+    if(cb != ''){
+        parent.iframe_params = {$callback_data};
+        parent.callParentBack(cb);
+    }
+    var index = parent.layer.getFrameIndex(window.name);
+    parent.layer.close(index);
+}
+setTimeout("shutMwsDialog()",{$timeout});
+</script>
+</body>
+</html>

@@ -1,0 +1,38 @@
+<include file="Common:header" />
+
+<div class="container">
+  <div class="row">
+    <div class="col-md-12">
+      <h4>这里可以管理企业</h4>
+      <p>企业创建后无法删除，只能禁用</p>
+      <a href="{:U('company/edit?id=0')}" class="btn"><i class="fa fa-plus"></i> 添加企业</a>
+    </div>
+  </div>
+
+  <table id="company-list" class="table table-border table-bordered table-bg table-hover table-order-sort">
+    <thead>
+    <tr>
+      <th width="10%">ID</th>
+      <th width="20%">企业名称</th>
+      <th width="15%">可用状态</th>
+      <th width="15%">操作</th>
+    </tr>
+    </thead>
+    <tbody>
+    <volist name="companyList" id="company">
+      <tr>
+        <td>{$company.id}</td>
+        <td>{$company.name}</td>
+        <td>{$company.status}</td>
+        <td>
+          <a href="{:U('company/edit')}&id={$company.id}">编辑</a>
+        </td>
+      </tr>
+    </volist>
+    </tbody>
+  </table>
+</div>
+
+<include file="Common:footer" />
+</body>
+</html>

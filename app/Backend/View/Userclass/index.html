@@ -1,0 +1,118 @@
+<include file="Common:header" />
+<style>
+  .pagination{margin:10px 0}
+</style>
+
+<div class="container-container" style="margin-top:20px;">
+
+
+  <div class="row">
+    <div class="col-md-12">
+      <div class="pull-left pagination">{$pageStr}</div>
+    </div>
+  </div>
+
+
+
+  <table id="photo-list" class="table table-border table-bordered table-bg table-hover table-order-sort mt-10">
+    <thead>
+    <tr>
+      <th align="center">用户名</th>
+      <th align="center">邮箱</th>
+      <th align="center">paypal帐号</th>
+      <th align="center" width="20%">操作</th>
+    </tr>
+    </thead>
+    <tbody>
+    <volist name="userlist" id="user">
+      <tr>
+        <td>{$user.username}</td>
+        <td>{$user.email}</td>
+        <th align="center">{$user.pay}</th>
+        <td>
+          <!--<div class="radio col-md-12"><label><input type="radio" name="radio_status_{$goods.asin}" class="status_radio" value="-1" _asin="{$goods.asin}" <if condition="$goods['status'] eq '-1'">checked</if> /> 不可用</label></div>-->
+          <!--<div class="radio col-md-12"><label><input type="radio" name="radio_status_{$goods.asin}" class="status_radio" value="1" _asin="{$goods.asin}" <if condition="$goods['status'] eq '1'">checked</if> /> 可用</label></div>-->
+          <!--<div class="radio col-md-12"><label><input type="radio" name="radio_status_{$goods.asin}" class="status_radio" value="0" _asin="{$goods.asin}" <if condition="$goods['status'] eq '0'">checked</if> /> 未确定</label></div>-->
+          <div style="display: inline-block">
+          <if condition="$user[disable] eq 1">
+          <a href="javascript:;" onclick="user_stop(this,{$user.id})">禁用</a>
+          <else />
+          <a href="javascript:;" onclick="user_start(this,{$user.id})">启用</a>
+          </if>
+          </div>
+          <a href="{:U('flow/index',array('id'=>$user[id]))}">订单</a>
+          <!--<a href="{:U('userclass/del',array('id'=>$goods[goods_id]))}">删除</a>-->
+        </td>
+      </tr>
+    </volist>
+    </tbody>
+  </table>
+  <div class="pull-right pagination">{$pageStr}</div>
+</div>
+
+<include file="Common:footer" />
+
+<script type="text/javascript">
+  $(document).delegate(".status_radio","click",function(){
+    var asin = $(this).attr('_asin'), status=$(this).val(), that = $(this);
+    $.ajax({
+      type: 'GET',
+      dataType: 'json',
+      url: "{:U('goods/status')}",
+      data: {asin:asin,status:status},
+      success: function(data){
+        that.parent().parent().parent().find('div').removeClass('has-error').removeClass('has-success');
+        if(data.status == '0'){
+          that.parent().parent().addClass('has-error');
+        }else{
+          that.parent().parent().addClass('has-success');
+        }
+      }
+    });
+  }).delegate('#exportBtn','click',function(){
+    var params = $("#exportForm").serialize();
+    window.location.href = "/index.php?"+params+"&c=goods&a=export";
+  });
+  function user_stop(obj,id) {
+      $.ajax({
+          url:'{:U("userclass/disable")}',
+          type:'get',
+          data:{
+              id:id,
+              disable:0
+          },
+          dataType:'json',
+          success:function (data) {
+              alert(data.result);
+              if(data.err){
+                  $(obj).parent().html('<a href="javascript:;" onclick="user_start(this,'+id+')">启用</a>');
+              }
+          },
+          error:function (err) {
+              console.log(err);
+          }
+      })
+  }
+  function user_start(obj,id) {
+      $.ajax({
+          url:'{:U("userclass/disable")}',
+          type:'get',
+          data:{
+              id:id,
+              disable:1
+          },
+          dataType:'json',
+          success:function (data) {
+              alert(data.result);
+              if(data.err){
+                  $(obj).parent().html('<a href="javascript:;" onclick="user_stop(this,'+id+')">禁用</a>');
+              }
+          },
+          error:function (err) {
+              console.log(err);
+          }
+      })
+  }
+</script>
+</body>
+</html>

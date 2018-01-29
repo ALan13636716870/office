@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="zh-cmn-Hans">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <link rel="stylesheet" href="__JS__/bootstrap/css/bootstrap.min.css">
+  <link rel="stylesheet" href="__CSS__/font-awesome.min.css">
+  <link rel="stylesheet" href="__JS__/datatables/1.10.0/jquery.dataTables.min.css">
+  <link rel="stylesheet" href="__JS__/ossUploader/webuploader.css">
+  <link rel="stylesheet" href="__CSS__/oms.css">
+  <title>{:C('OFFICE_NAME')}</title>
+</head>
+<body>
+
+<header class="navbar navbar-inverse navbar-fixed-top" role="banner">
+  <div class="container-fluid">
+    <div class="navbar-header"><a href="{:U('index/index')}" class="navbar-brand">{:C('OFFICE_NAME')}</a></div>
+    <ul class="nav navbar-nav">
+      <li class="dropdown">
+        <a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown" role="button">Amazon数据 <b class="caret"></b></a>
+        <ul class="dropdown-menu">
+          <li id="navlink-Goods-index"><a href="{:U('goods/index')}">采集商品管理</a></li>
+          <li id="navlink-Goods-index"><a href="{:U('sku/index')}">SKU批量生成</a></li>
+          <li id="navlink-Item-index"><a href="{:U('item/index')}">手动添加商品</a></li>
+        </ul>
+      </li>
+      <li class="dropdown">
+        <a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown" role="button">数据管理 <b class="caret"></b></a>
+        <ul class="dropdown-menu">
+          <li id="navlink-Keyword-index"><a href="{:U('keyword/index')}">关键词列表</a></li>
+          <li id="navlink-Asin-index"><a href="{:U('asin/index')}">ASIN码销售数据</a></li>
+          <li id="navlink-Haoye-index"><a href="{:U('haoye/index')}">分类关键词数据</a></li>
+        </ul>
+      </li>
+      <li id="navlink-Batch-index"><a href="{:U('batch/index')}">我的批次</a></li>
+      <li class="dropdown">
+        <a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown" role="button">商品 <b class="caret"></b></a>
+        <ul class="dropdown-menu">
+          <li id=""><a href="{:U('goodsModel/index')}">商品管理</a></li>
+          <li id=""><a href="{:U('Model/index')}">模具管理</a></li>
+          <li id=""><a href="{:U('banner/index')}">轮播管理</a></li>
+          <li id=""><a href="{:U('userclass/index')}">用户管理</a></li>
+          <li id=""><a href="{:U('flow/index')}">订单管理</a></li>
+        </ul>
+      </li>
+
+      <li class="dropdown">
+        <a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown" role="button">评论 <b class="caret"></b></a>
+        <ul class="dropdown-menu">
+          <li id=""><a href="{:U('comments/index')}">评论管理</a></li>
+        </ul>
+      </li>
+    </ul>
+    <ul class="nav navbar-nav navbar-right">
+      <li><p class="navbar-text">{$Think.session.account.identity}: <strong>{$Think.session.account.alias_name}</strong> ({$Think.session.account.username})</p></li>
+      <li class="dropdown">
+        <a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown" role="button">用户中心 <b class="caret"></b></a>
+        <ul class="dropdown-menu">
+          <if condition="$Think.session.account.identity == 'superadmin'">
+            <li><a href="{:U('company/index')}">企业列表</a></li>
+            <li><a href="{:U('user/index')}">员工列表</a></li>
+          </if>
+          <if condition="$Think.session.account.identity == 'administrator'">
+            <li><a href="{:U('user/index')}">员工列表</a></li>
+          </if>
+          <li><a id="btn-modify-profile" href="javascript:;">个人资料修改</a></li>
+          <li><a href="{:U('home/account/logout')}">退出</a></li>
+        </ul>
+      </li>
+    </ul>
+  </div>
+</header>

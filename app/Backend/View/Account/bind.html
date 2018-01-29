@@ -1,0 +1,26 @@
+<include file="Common:header_simple" />
+
+<div class="container">
+  <p>系统检测到您还在使用原office账号登录/未绑定mws用户id，现在需要把office账号和mws系统账号合并，请在以下输入mws账号信息。绑定后请使用mws账号登录</p>
+  <p>{$old.id} {$old.company_id}</p>
+  <form action="{:U('account/bind')}" method="post" id="form-profile">
+    <div class="form-group">
+      <label for="username"><span class="c-red">*</span>登录名称：</label>
+      <input type="text" class="form-control" name="username" id="username" autocomplete="off" value="" placeholder="mws用户名" />
+    </div>
+    <div class="form-group">
+      <label for="password">密码：</label>
+      <input type="text" class="form-control" name="password" id="password" autocomplete="off" value="" placeholder="mws密码" />
+    </div>
+    <div class="form-group">
+      <button class="btn btn-primary btn-block" type="submit">提交</button>
+    </div>
+  </form>
+</div>
+
+<include file="Common:footer_simple" />
+<script type="text/javascript">
+  formValidate("form-profile");
+</script>
+</body>
+</html>

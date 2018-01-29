@@ -1,0 +1,48 @@
+<include file="Common:header" />
+<style>
+  .pagination{margin:10px 0}
+  del{color:#ddd;}
+</style>
+
+<div class="container-container" style="margin-top:20px;">
+  <h5>手机壳关键词排行 <a href="{:U('haoye/index')}">返回</a> <a href="{:U('haoye/bad', array('t'=>'case'))}">过滤词设置</a></h5>
+
+  <div class="row">
+    <div class="col-md-12">
+      <div class="pull-left pagination">{$pageStr}</div>
+      <div class="pull-right">
+        <form class="form-inline" method="get" action="index.php">
+          <input type="hidden" name="c" value="haoye" />
+          <input type="hidden" name="a" value="pcase" />
+          <div class="form-group">
+            <input type="text" class="form-control" id="k" name="k" placeholder="请输入关键词" value="{$k}">
+          </div>
+          <button type="submit" class="btn btn-default">搜索</button>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <table id="photo-list" class="table table-border table-bordered table-bg table-hover table-order-sort mt-10">
+    <thead>
+    <tr>
+      <th>关键词</th>
+      <th>日搜索数量</th>
+    </tr>
+    </thead>
+    <tbody>
+    <volist name="caseList" id="case">
+      <tr>
+        <td>{$case.keyword}</td>
+        <td>{$case.search_count}</td>
+      </tr>
+    </volist>
+    </tbody>
+  </table>
+  <div class="pull-right pagination">{$pageStr}</div>
+</div>
+
+<include file="Common:footer" />
+
+</body>
+</html>

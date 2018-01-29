@@ -1,0 +1,94 @@
+<include file="Common:header" />
+
+<div class="container">
+  <div class="row">
+    <div class="col-md-12">
+      <h4>模具面：
+        <a href="{:U('mould/index', array('category_id'=>$categoryInfo[id]))}">{$categoryInfo.name}</a>
+        > {$mouldInfo.title}</h4>
+      <a href="{:U('comments/edit')}" class="btn"><i class="fa fa-plus"></i> 添加面</a>
+    </div>
+  </div>
+
+  <table id="mould-list" class="table table-border table-bordered table-bg table-hover table-order-sort">
+    <thead>
+    <tr>
+      <th width="5%">ID</th>
+      <th width="6%">姓名</th>
+      <th width="10%">评论详情</th>
+      <th width="7%">邮箱</th>
+      <th width="15%">评论主题</th>
+      <th width="6%">评论时间</th>
+      <th width="7%">操作</th>
+    </tr>
+    </thead>
+    <tbody>
+    <volist name="commitList" id="comment">
+      <tr>
+        <td>{$comment.id}</td>
+        <td>{$comment.username}</td>
+        <td>{$comment.content}</td>
+        <td>{$comment.email}</td>
+        <td>{$comment.goods_name}</td>
+        <td>{$comment.fromatt_add_time}</td>
+        <td>
+          <a href="{:U('comments/edit', array('id'=>$comment[id]))}">编辑</a>
+          <a href="javascript:;" onclick="<if condition='$comment.is_enable eq 1'>enable_stop<else />enable_start</if>(this,{$comment.id})"><if condition="$comment.is_enable eq 1">禁用<else />启用</if></a>
+          <a href="{:U('comments/del', array('id'=>$comment[id]))}">删除</a>
+          <!--<if condition='$order.is_submit eq 0'><button type="button" onclick="order_invoice_no({$order.order_id})">修改</button></if>-->
+        </td>
+        <!--<a href="{:U('mould/delete', array('cat_id'=>$cat_id, 'id'=>$side['id']))}" onclick="return confirm('确认要删除吗？');">删除</a></td>-->
+      </tr>
+    </volist>
+
+    </tbody>
+  </table>
+</div>
+<script>
+  function enable_stop(obj,id) {
+      $.ajax({
+          url:'{:U("comments/edit_enable")}',
+          data:{
+              id:id,
+              is_enable:0
+          },
+          type:'get',
+          dataType:'json',
+          success:function (data) {
+              if(data.err){
+                  $(obj).attr('onclick','enable_start(this,'+id+')').html('启用');
+              }
+              layer.msg(data.result)
+          },
+          error:function (err) {
+              console.log(err);
+              layer.msg('网络错误',{time:1000})
+          }
+      })
+  }
+  function enable_start(obj,id) {
+      $.ajax({
+          url:'{:U("comments/edit_enable")}',
+          data:{
+              id:id,
+              is_enable:1
+          },
+          type:'get',
+          dataType:'json',
+          success:function (data) {
+              layer.msg(data.result);
+              if(data.err){
+                  $(obj).attr('onclick','enable_stop(this,'+id+')').html('禁用');
+              }
+
+          },
+          error:function (err) {
+              console.log(err);
+              layer.msg('网络错误',{time:1000})
+          }
+      })
+  }
+</script>
+<include file="Common:footer" />
+</body>
+</html>

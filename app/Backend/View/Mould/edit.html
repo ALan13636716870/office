@@ -1,0 +1,102 @@
+<include file="Common:header" />
+
+<div class="container" style="margin-top:50px">
+  <div class="row">
+    <div class="col-md-12">
+      <form action="<if condition='isset($sideInfo[id]) '>{:U('mould/edit')}<else />{:U('mould/add')}</if>" method="post" id="form-category-edit">
+        <div class="form-group">
+          <label for="title"><span class="c-red">*</span>标题：</label>
+          <input type="text" class="form-control" autocomplete="off" name="title" id="title" value="{$sideInfo.title}" required />
+        </div>
+        <div class="form-group">
+          <label class="control-label"><span class="c-red">*</span>是否需要生成：</label>
+          <div>
+            <label class="radio-inline"><input name="need_create" type="radio" value="0" <if condition="$sideInfo.need_create eq 0">checked</if> required /> 不需要</label>
+            <label class="radio-inline"><input name="need_create" type="radio" value="1" <if condition="$sideInfo.need_create eq 1">checked</if> /> 需要</label>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="width">匹配设计图宽：</label>
+          <input type="text" class="form-control" autocomplete="off" name="width" id="width" value="{$sideInfo.width}"  />
+        </div>
+        <div class="form-group">
+          <label for="height">匹配设计图高：</label>
+          <input type="text" class="form-control" autocomplete="off" name="height" id="height" value="{$sideInfo.height}"  />
+        </div>
+        <div class="form-group">
+          <label for="mould_width">模具图宽：</label>
+          <input type="text" class="form-control" autocomplete="off" name="mould_width" id="mould_width" value="{$sideInfo.mould_width}"  />
+        </div>
+        <div class="form-group">
+          <label for="mould_height">模具图高：</label>
+          <input type="text" class="form-control" autocomplete="off" name="mould_height" id="mould_height" value="{$sideInfo.mould_height}"  />
+        </div>
+        <div class="form-group clearfix">
+          <label>生成产品图的图层(不透明)：</label>
+          <div class="photo-picker" id="create-photo-picker">选择图片</div>
+          <div id="create-photo-container"></div>
+        </div>
+        <div class="form-group clearfix">
+          <label>设计器里的图层(半透明)：</label>
+          <div class="photo-picker" id="design-photo-picker">选择图片</div>
+          <div id="design-photo-container"></div>
+        </div>
+        <input type="hidden" name="position" value="1" placeholder="位置(从1开始，在之前填写n，在之后填写-n)" />
+        <div class="form-group">
+          <label for="coordinate_start">起始坐标：</label>
+          <input type="text" class="form-control" autocomplete="off" name="coordinate_start" id="coordinate_start" value="{$sideInfo.coordinate_start}" placeholder="默认左上角，数字之间用英文逗号隔开" />
+        </div>
+        <div class="form-group">
+          <label for="coordinate_end">结束坐标：</label>
+          <input type="text" class="form-control" autocomplete="off" name="coordinate_end" id="coordinate_end" value="{$sideInfo.coordinate_end}" placeholder="默认右下角，数字之间用英文逗号隔开" />
+        </div>
+        <div class="form-group">
+          <label for="display_order"><span class="c-red">*</span>排序：</label>
+          <input type="text" class="form-control" autocomplete="off" name="display_order" id="display_order" value="{$sideInfo.display_order}" required />
+        </div>
+        <div class="form-group">
+          <button class="btn btn-primary" type="submit">保存</button>
+        </div>
+        <input type="hidden" name="cat_id" value="{$cat_id}" />
+        <input type="hidden" name="id" value="{$sideInfo.id}" />
+      </form>
+    </div>
+  </div>
+</div>
+<include file="Common:footer" />
+<script type="text/javascript" src="__JS__/ossUploader/webuploader.js"></script>
+<script type="text/javascript" src="__JS__/ossUploader/uploader.js"></script>
+<script type="text/javascript">
+  var oss_server = "{:C('OSS_HOST')}",
+      oss_token_api = "{:U('oss/params')}",
+      oss_preview_api = "{:U('oss/photo')}";
+
+  $('#create-photo-picker').uploader({
+    initData: "{$sideInfo[create_photo]}",
+    multi:false,
+    container:$('#create-photo-container'),
+    imagedir: 'mould',
+    callback: function(imginfo, box) {
+      var input_obj = $('<input type="hidden" name="create_photo" value="'+imginfo.path+'" />');
+      box.append(input_obj);
+      box.find('img').css('max-width', '200px').css('width', '100%');
+    }
+  });
+  $('#design-photo-picker').uploader({
+    initData: "{$sideInfo[design_photo]}",
+    multi:false,
+    container:$('#design-photo-container'),
+    imagedir: 'mould',
+    callback: function(imginfo, box) {
+      var input_obj = $('<input type="hidden" name="design_photo" value="'+imginfo.path+'" />');
+      box.append(input_obj);
+      box.find('img').css('max-width', '200px').css('width', '100%');
+    }
+  });
+
+  $(function(){
+    formValidate("mould-edit");
+  });
+</script>
+</body>
+</html>
