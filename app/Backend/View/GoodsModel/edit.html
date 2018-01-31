@@ -6,35 +6,76 @@
       <form action="{:U('goodsModel/modify_edit')}" method="post" id="form-category-edit">
         <div class="form-group">
           <label for="title"><span class="c-red">*</span>标题：</label>
-          <input type="text" class="form-control" autocomplete="off" name="goods_name" id="title" value="{$goods.goods_name}" required />
+          <input type="text" class="form-control" autocomplete="off" name="title" id="title" value="{$goods.title}" required />
         </div>
         <div class="form-group">
-          <label for="title"><span class="c-red">*</span>批次：</label>
-          <input type="text" class="form-control" autocomplete="off" name="goods_sn" id="goods_sn" value="{$goods.goods_sn}" required />
+          <label for="title"><span class="c-red">*</span>价格：</label>
+          <input type="text" class="form-control" autocomplete="off" name="price" id="price" value="{$goods.price}" required />
+        </div>
+        <div class="form-group">
+          <label for="title"><span class="c-red">*</span>分类：</label>
+          <!--<input type="text" class="form-control" autocomplete="off" name="category" id="category" value="{$goods.category}" required />-->
+          <select name="category" id="category">
+            <option value="0" >请选择分类</option>
+            <option value="1" <if condition="$goods[category] eq '1'">selected</if>>情侣</option>
+            <option value="2" <if condition="$goods[category] eq '2'">selected</if>>家庭</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="title"><span class="c-red">*</span>描述：</label><br >
+          <textarea name="description" class="form-control" style="width:1140px;height:80px;resize: none">{$goods.description}</textarea>
         </div>
         <div class="form-group clearfix">
-          <label>模具：</label>
-          <select name="cat_id">
-            <option value="0">请选择模具</option>
-            <volist name="catList" id="cat">
-              <option value="{$cat.cat_id}" <if condition="$goods[cat_id] eq $cat[cat_id]">selected</if>>{$cat.cat_name}</option>
+          <label>表盘：</label>
+          <select name="watch_dial">
+            <option value="0">请选择表盘</option>
+            <volist name="dialList" id="dial">
+              <option value="{$dial.id}" <if condition="$dial[id] eq $goods[watch_dial]">selected</if>>{$dial.title}</option>
             </volist>
           </select>
         </div>
         <div class="form-group clearfix">
-          <label>设计器里的图层(半透明)：</label>
+          <label>表带：</label>
+          <select name="watch_strap">
+            <option value="0">请选择表带</option>
+            <volist name="strapList" id="strap">
+              <option value="{$strap.id}" <if condition="$strap[id] eq $goods[watch_strap]">selected</if>>{$strap.title}</option>
+            </volist>
+          </select>
+        </div>
+        <div class="form-group clearfix">
+          <label>模具：</label>
+          <select name="mould_id">
+            <option value="0">请选择模具</option>
+            <volist name="mouldList" id="mould">
+              <option value="{$mould.id}" <if condition="$mould[id] eq $goods[mould_id]">selected</if>>{$mould.name}</option>
+            </volist>
+          </select>
+        </div>
+        <div class="form-group clearfix">
+          <label>商品图：</label>
+          <div class="photo-picker" id="create-photo-picker">选择图片</div>
+          <div id="create-photo-container"></div>
+        </div>
+        <div class="form-group clearfix">
+          <label>工厂图：</label>
           <div class="photo-picker" id="design-photo-picker">选择图片</div>
           <div id="design-photo-container"></div>
         </div>
-        <div class="form-group">
-          <label for="display_order"><span class="c-red">*</span>排序：</label>
-          <input type="text" class="form-control" autocomplete="off" name="display_order" id="display_order" value="{$goods.display_order}" required />
+        <div class="form-group clearfix">
+          <label>展示图：</label>
+          <div class="photo-picker" id="photo-view-picker">选择图片</div>
+          <div id="photo-view-container"></div>
         </div>
+        <!--<div class="form-group">-->
+          <!--<label for="display_order"><span class="c-red">*</span>排序：</label>-->
+          <!--<input type="text" class="form-control" autocomplete="off" name="display_order" id="display_order" value="{$goods.display_order}" required />-->
+        <!--</div>-->
         <div class="form-group">
           <button class="btn btn-primary" type="submit">保存</button>
         </div>
-
-        <input type="hidden" name="id" value="{$goods.goods_id}" />
+        <input type="hidden" name="id" value="{$goods.id}" />
+        <input type="hidden" name="mould" value="{$mould_id}" />
       </form>
     </div>
   </div>
@@ -48,28 +89,38 @@
       oss_preview_api = "{:U('oss/photo')}";
 
   $('#create-photo-picker').uploader({
-    initData: "{$sideInfo[create_photo]}",
+    initData: "{$goods.photo}",
     multi:false,
     container:$('#create-photo-container'),
     imagedir: 'mould',
     callback: function(imginfo, box) {
-      var input_obj = $('<input type="hidden" name="create_photo" value="'+imginfo.path+'" />');
+      var input_obj = $('<input type="hidden" name="photo" value="'+imginfo.path+'" />');
       box.append(input_obj);
-      box.find('img').css('max-width', '200px').css('width', '100%');
+      box.find('img').css('max-width', '100px').css('width', '100%');
     }
   });
   $('#design-photo-picker').uploader({
-    initData: "{$goods[goods_img]}",
+    initData: "{$goods.factory_photo}",
     multi:false,
     container:$('#design-photo-container'),
     imagedir: 'mould',
     callback: function(imginfo, box) {
-      var input_obj = $('<input type="hidden" name="design_photo" value="'+imginfo.path+'" />');
+      var input_obj = $('<input type="hidden" name="factory_photo" value="'+imginfo.path+'" />');
       box.append(input_obj);
-      box.find('img').css('max-width', '200px').css('width', '100%');
+      box.find('img').css('max-width', '100px').css('width', '100%');
     }
   });
-
+  $('#photo-view-picker').uploader({
+      initData: "{$goods.photo_view}",
+      multi:false,
+      container:$('#photo-view-container'),
+      imagedir: 'mould',
+      callback: function(imginfo, box) {
+          var input_obj = $('<input type="hidden" name="photo_view" value="'+imginfo.path+'" />');
+          box.append(input_obj);
+          box.find('img').css('max-width', '100px').css('width', '100%');
+      }
+  });
   $(function(){
     formValidate("mould-edit");
   });

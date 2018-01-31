@@ -67,7 +67,9 @@ class OssController extends CommonController {
         if($width>0)$url .= '@'.$width.'w';
         $url .= '?OSSAccessKeyId='.C('OSS_ACCESS_ID').
             '&Expires='.$expires.'&Signature='.$baseSign.'&'.$disposition;
+
         header("Location: " . $url);
+
         exit();
     }
 

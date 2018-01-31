@@ -13,10 +13,10 @@ use Think\Controller;
 class CommentsController extends Controller
 {
     public function index(){
-        $comment = M('comment as c')
-            ->join('left join amazon_user as u on c.user_id = u.id')
-            ->join('left join amazon_goods as g on g.goods_id = c.goods_id')
-            ->field('c.*,u.username,u.id as user_id,u.email,g.goods_name')->select();
+        $comment = M('review as c')
+//            ->join('left join amazon_user as u on c.user_id = u.id')
+//            ->join('left join amazon_goods as g on g.goods_id = c.goods_id')
+            ->field('c.*')->select();
 
         foreach ($comment as $key => $val){
             $comment[$key]['fromatt_add_time'] = date('Y-m-d',$val['add_time']);
@@ -37,40 +37,56 @@ class CommentsController extends Controller
     }
     public function edit(){
         if(IS_POST){
-
-            $is_add = I('post.is_add',0,'intval');
-            $cat_id = I('post.cat_id',1,'intval');
             $content = I('post.content','','htmlspecialchars,trim');
             $id = I('post.id',0,'intval');
+            $add_time = I('post.add_time','2018-01-01','htmlspecialchars,trim');
+            $photo = I('post.photo','','htmlspecialchars,trim');
             $user_name= I('post.user_name','','htmlspecialchars,trim');
-            $user_id = I('post.user_id',0,'intval');
-            if($user_id == 0){
-                $user_id = M('user')->where(array('username'=> $user_name))->field('id')->find()['id'];
-            }
-//            var_dump($content);exit;
-            if(!$user_id){
-                $this ->error('用户名称填写错误');
+            $goods_name = I('post.goods_name','','htmlspecialchars,trim');
+            $rating = I('post.rating',0,'intval');
+            $title = I('post.title','','htmlspecialchars,trim');
+            if(!preg_match('/^[0-9]{4}-[0-9]{2}-[0-9]{2}$/',$add_time)){
+                $this ->error('时间格式错误');
             }
             if(empty($content)){
                 $this ->error('评论内容不能为空');
             }
-//            var_dump($is_add);exit();
-            if($is_add == 0){
+
+            $str_photo = '';
+//            var_dump($photo);
+            if(is_array($photo)){
+                foreach ($photo as $key =>$val){
+                    $str_photo .= $val." , ";
+
+                }
+            }
+            $str_photo =rtrim($str_photo, " , ");
+//            var_dump($str_photo);exit;
+            if(empty($photo)){
+                $str_photo ='';
+            }
+            if($id <> 0){
                 $data = array(
-                    'user_id' =>$user_id['id'],
-                    'content'=>$content,
-                    'is_enable' => '1',
-                    'cat_id' =>$cat_id
+                    'username' =>$user_name,
+                    'goods_name' => $goods_name,
+                    'rating'=> $rating,
+                    'title'=> $title,
+                    'content'=> $content,
+                    'photo' => $str_photo,
+                    'add_time'=> strtotime($add_time)
                 );
-                $result = M('comment')->data($data)->where('id='.$id)->save();
+//                var_dump($data);exit();
+                $result = M('review')->data($data)->where('id='.$id)->save();
 //                var_dump(M('comment')->getLastSql());exit();
             }else{
                 $data = array(
-                    'user_id' =>$user_id['id'],
-                    'content'=>$content,
-                    'add_time'=>time(),
-                    'is_enable' => '1',
-                    'cat_id' =>$cat_id
+                    'username' =>$user_name,
+                    'goods_name' => $goods_name,
+                    'rating'=> $rating,
+                    'title'=> $title,
+                    'content'=> $content,
+                    'photo' => $str_photo,
+                    'add_time'=> strtotime($add_time)
                 );
                 $result = M('comment')->data($data)->add();
             }
@@ -83,18 +99,15 @@ class CommentsController extends Controller
         }else{
             $id = I('get.id',0,'intval');
             if($id <> 0){
-                $comment = M('comment as c')
-                    ->join('left join amazon_user as u on c.user_id = u.id')
-                    ->join('left join amazon_goods as g on g.goods_id = c.goods_id')
-                    ->field('c.*,u.username,u.id as user_id,u.email,g.goods_name')
+                $comment = M('review as c')
+                    ->field('c.*')
                     ->where(array('c.id'=>$id))
                     ->find();
-                $this ->assign('is_add','0');
+//                $comment['photo'] = explode(', ',$comment['photo']);
                 $this ->assign('comment',$comment);
-            }else{
-                $this ->assign('is_add','1');
             }
-            $goods = M('goods')->field('goods_id,goods_name')->select();
+
+            $goods = M('goods')->field('id,title')->select();
             $this ->assign('goods_list',$goods);
             $this ->display();
         }

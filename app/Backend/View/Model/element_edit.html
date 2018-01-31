@@ -1,0 +1,74 @@
+<include file="Common:header" />
+
+<div class="container" style="margin-top:50px">
+  <div class="row">
+    <div class="col-md-6">
+      <form action="{:U('model/element_edit')}" method="post" id="form-category-edit">
+        <div class="form-group">
+          <label for="title"><span class="c-red">*</span>标题：</label>
+          <input type="text" class="form-control" autocomplete="off" name="title" id="title" value="{$element.title}" required />
+        </div>
+
+        <div class="form-group">
+          <label for="group_name">宽：</label>
+          <input type="text" class="form-control" autocomplete="off" name="width" id="width" value="{$element.width}" />
+        </div>
+        <div class="form-group">
+          <label for="group_name">高：</label>
+          <input type="text" class="form-control" autocomplete="off" name="height" id="height" value="{$element.height}" />
+        </div>
+        <div class="form-group">
+          <label for="style">款式：</label>
+          <input id="dial" type="radio" name="type" value="1" <if condition="$element.type eq 'dial'">checked</if>><label for="dial">dial</label>&nbsp;&nbsp;&nbsp;
+          <input id="starp" type="radio" name="type" value="2" <if condition="$element.type eq 'starp'">checked</if>><label for="starp">starp</label>
+        </div>
+
+        <div class="form-group clearfix">
+          <label>预览图：</label>
+          <div class="photo-picker" id="ppicker">预览图</div>
+          <div id="ppicker-container"></div>
+        </div>
+        <div class="form-group">
+          <label for="">是否可用：</label><br>
+          <input id="status_1" type="radio" name="status" value="1" <if condition="$element.status eq 1">checked</if>><label for="status_1" >可用</label>&nbsp;&nbsp;&nbsp;
+          <input id="status_2" type="radio" name="status" value="2" <if condition="$element.status eq 0">checked</if>><label for="status_2" >不可用</label>
+        </div>
+        <div class="form-group">
+          <label for="title">排序：</label>
+          <input type="text" class="form-control" autocomplete="off" name="display_order" id="display_order" value="{$element.display_order}" />
+        </div>
+        <div class="form-group">
+          <button class="btn btn-primary" type="submit">保存</button>
+        </div>
+        <input type="hidden" name="id" value="{$element.id}" />
+      </form>
+    </div>
+
+  </div>
+</div>
+<include file="Common:footer" />
+<script type="text/javascript" src="__JS__/ossUploader/webuploader.js"></script>
+<script type="text/javascript" src="__JS__/ossUploader/uploader.js"></script>
+<script type="text/javascript">
+  var oss_server = "{:C('OSS_HOST')}",
+      oss_token_api = "{:U('oss/params')}",
+      oss_preview_api = "{:U('oss/photo')}";
+  $('#ppicker').uploader({
+    initData: '{$element.photo}',
+    multi:false,
+    container:$('#ppicker-container'),
+    callback: function(imginfo, box) {
+
+      var input_obj = $('<input type="hidden" name="photo" value="'+imginfo.path+'" />');
+      console.log(box);
+      box.append(input_obj);
+    }
+  });
+
+  $(function(){
+    $('#category_id').val('{$mould_info.category_id}');
+    formValidate("mould-edit");
+  });
+</script>
+</body>
+</html>

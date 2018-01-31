@@ -11,7 +11,10 @@ return array(
     'TMPL_PARSE_STRING'  =>array(
         '__PUBLIC__' => '/assets',
         '__JS__'     => '/assets/js',
-        '__CSS__'     => '/assets/css'
+        '__CSS__'     => '/assets/css',
+        '__TIME__'     => '/assets/time',
+        '__IMG__'      => '/assets/image'
+
     ),
 
     //系统信息

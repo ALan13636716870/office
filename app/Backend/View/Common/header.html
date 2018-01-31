@@ -9,6 +9,13 @@
   <link rel="stylesheet" href="__JS__/datatables/1.10.0/jquery.dataTables.min.css">
   <link rel="stylesheet" href="__JS__/ossUploader/webuploader.css">
   <link rel="stylesheet" href="__CSS__/oms.css">
+  <link rel="stylesheet" type="text/css" href="__TIME__/src/jcDate.css" media="all" />
+  <!--<script src="http://cdn.bootcss.com/jquery/2.2.4/jquery.js" charset="utf-8"></script>-->
+
+
+
+
+
   <title>{:C('OFFICE_NAME')}</title>
 </head>
 <body>
@@ -17,38 +24,28 @@
   <div class="container-fluid">
     <div class="navbar-header"><a href="{:U('index/index')}" class="navbar-brand">{:C('OFFICE_NAME')}</a></div>
     <ul class="nav navbar-nav">
-      <li class="dropdown">
-        <a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown" role="button">Amazon数据 <b class="caret"></b></a>
-        <ul class="dropdown-menu">
-          <li id="navlink-Goods-index"><a href="{:U('goods/index')}">采集商品管理</a></li>
-          <li id="navlink-Goods-index"><a href="{:U('sku/index')}">SKU批量生成</a></li>
-          <li id="navlink-Item-index"><a href="{:U('item/index')}">手动添加商品</a></li>
-        </ul>
-      </li>
-      <li class="dropdown">
-        <a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown" role="button">数据管理 <b class="caret"></b></a>
-        <ul class="dropdown-menu">
-          <li id="navlink-Keyword-index"><a href="{:U('keyword/index')}">关键词列表</a></li>
-          <li id="navlink-Asin-index"><a href="{:U('asin/index')}">ASIN码销售数据</a></li>
-          <li id="navlink-Haoye-index"><a href="{:U('haoye/index')}">分类关键词数据</a></li>
-        </ul>
-      </li>
-      <li id="navlink-Batch-index"><a href="{:U('batch/index')}">我的批次</a></li>
+
       <li class="dropdown">
         <a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown" role="button">商品 <b class="caret"></b></a>
         <ul class="dropdown-menu">
           <li id=""><a href="{:U('goodsModel/index')}">商品管理</a></li>
-          <li id=""><a href="{:U('Model/index')}">模具管理</a></li>
-          <li id=""><a href="{:U('banner/index')}">轮播管理</a></li>
+          <li id=""><a href="{:U('Model/index')}">元素管理</a></li>
+          <li id=""><a href="{:U('mould/index')}">模具管理</a></li>
+
+        </ul>
+      </li>
+      <li class="dropdown">
+        <a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown" role="button">用户 <b class="caret"></b></a>
+        <ul class="dropdown-menu">
+          <li id=""><a href="{:U('comments/index')}">评论管理</a></li>
           <li id=""><a href="{:U('userclass/index')}">用户管理</a></li>
           <li id=""><a href="{:U('flow/index')}">订单管理</a></li>
         </ul>
       </li>
-
       <li class="dropdown">
-        <a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown" role="button">评论 <b class="caret"></b></a>
+        <a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown" role="button">定制 <b class="caret"></b></a>
         <ul class="dropdown-menu">
-          <li id=""><a href="{:U('comments/index')}">评论管理</a></li>
+          <li id=""><a href="{:U('design/index')}">定制管理</a></li>
         </ul>
       </li>
     </ul>
@@ -70,4 +67,5 @@
       </li>
     </ul>
   </div>
+
 </header>

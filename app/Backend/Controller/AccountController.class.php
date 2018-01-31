@@ -30,20 +30,20 @@ class AccountController extends Controller {
         $username = I('post.office_username','','htmlspecialchars,trim');
         $password = I('post.office_password');
 
-        $account = M('admin_user')->where(array('user_name'=>$username))->find();
+        $account = M('admin')->where(array('username'=>$username))->find();
         if(empty($account)){
             $this->error('账号不存在');
         }
 
-        if(!$account['status']){
-            $this->error('账号已禁用');
-        }
+//        if(!$account['status']){
+//            $this->error('账号已禁用');
+//        }
         if(!password_verify($password, $account['password'])){
             $this->error('密码错误');
         }
 
-        $companyInfo = M('company')->where(array('id'=>$account['company_id']))->find();
-        if(!$companyInfo['status'])exit('Account Error, Please try later!');
+//        $companyInfo = M('company')->where(array('id'=>$account['company_id']))->find();
+//        if(!$companyInfo['status'])exit('Account Error, Please try later!');
 
         session('account', $account);
         session('company', $companyInfo);

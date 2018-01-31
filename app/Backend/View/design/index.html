@@ -1,0 +1,65 @@
+<include file="Common:header" />
+
+<div class="">
+  <div class="row">
+    <div class="col-md-12">
+      <h4>定制：</h4>
+      <a href="{:U('mould/edit')}" class="btn"><i class="fa fa-plus"></i> 添加面</a>
+    </div>
+  </div>
+
+  <table id="mould-list" class="table table-border table-bordered table-bg table-hover table-order-sort">
+    <thead>
+    <tr>
+      <th width="5%">ID</th>
+      <th width="7%">用户名称</th>
+      <th width="4%">款式</th>
+      <th width="5%">设计时间</th>
+      <th width="5%">表盘名称</th>
+      <th width="5%">表带名称</th>
+      <th width="8%">定制原图</th>
+      <th width="8%">模具图</th>
+      <th width="8%">定制图</th>
+      <th width="8%">工厂图</th>
+      <th width="6%">原图左上角坐标</th>
+      <th width="6%">原图右上角坐标</th>
+      <th width="6%">原图左下角坐标</th>
+      <th width="6%">原图右下角坐标</th>
+
+
+
+      <th width="10%">操作</th>
+    </tr>
+    </thead>
+    <tbody>
+    <volist name="designList" id="design">
+      <tr>
+        <td>{$design.id}</td>
+        <td>{$design.name}</td>
+        <td>{$design.watch_style}</td>
+        <td>{$design.add_time}</td>
+        <td>{$design.dial}</td>
+        <td>{$design.starp}</td>
+        <td><a href="{:getImageUrl($design[origin_photo])}" target="_blank"><img style="max-width: 100px;" src="{:getImageUrl($design[origin_photo])}" /></a></td>
+        <td><a href="{:getImageUrl($design[mould_photo])}" target="_blank"><img style="max-width: 100px;" src="{:getImageUrl($design[mould_photo])}" /></a></td>
+        <td><a href="{:getImageUrl($design[photo])}" target="_blank"><img style="max-width: 100px;" src="{:getImageUrl($design[photo])}" /></a></td>
+        <td><a href="{:getImageUrl($design[factory_photo])}" target="_blank"><img style="max-width: 100px;" src="{:getImageUrl($design[factory_photo])}" /></a></td>
+        <td>{$design.left_top_coordinate}</td>
+        <td>{$design.right_top_coordinate}</td>
+        <td>{$design.left_bottom_coordinate}</td>
+        <td>{$design.right_bottom_coordinate}</td>
+        <td>
+          <a href="{:U('mould/edit', array('id'=>$side['id']))}">编辑</a>
+          <a href="{:U('goodsModel/index', array('id'=>$side['id']))}">查看订单</a>
+          <a href="{:U('mould/delete', array('id'=>$side['id']))}" onclick="return confirm('确认要删除吗？');">删除</a>
+        </td>
+      </tr>
+    </volist>
+
+    </tbody>
+  </table>
+</div>
+
+<include file="Common:footer" />
+</body>
+</html>

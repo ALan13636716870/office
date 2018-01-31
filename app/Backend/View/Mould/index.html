@@ -6,7 +6,7 @@
       <h4>模具面：
         <a href="{:U('mould/index', array('category_id'=>$categoryInfo[id]))}">{$categoryInfo.name}</a>
         > {$mouldInfo.title}</h4>
-      <a href="{:U('mould/add', array('id'=>0,'cat_id'=>$cat_id))}" class="btn"><i class="fa fa-plus"></i> 添加面</a>
+      <a href="{:U('mould/edit')}" class="btn"><i class="fa fa-plus"></i> 添加面</a>
     </div>
   </div>
 
@@ -14,12 +14,15 @@
     <thead>
     <tr>
       <th width="5%">ID</th>
-      <th width="10%">名称</th>
-      <th width="15%">设计图尺寸</th>
-      <th width="15%">模具图尺寸</th>
-      <th width="15%">生成图层</th>
-      <th width="15%">设计图层</th>
-      <th width="10%">设计图坐标</th>
+      <th width="8%">名称</th>
+      <th width="12%">设计图尺寸</th>
+      <!--<th width="12%">模具图尺寸</th>-->
+      <th width="12%">生成图层</th>
+      <th width="12%">设计图层</th>
+      <th width="10%">左上角坐标</th>
+      <th width="10%">右上角坐标</th>
+      <th width="10%">左下角坐标</th>
+      <th width="10%">右下角坐标</th>
       <th width="10%">操作</th>
     </tr>
     </thead>
@@ -27,14 +30,20 @@
     <volist name="sideList" id="side">
       <tr>
         <td>{$side.id}</td>
-        <td>{$side.title}</td>
-        <td>{$side.width} * {$side.height}</td>
-        <td>{$side.mould_width} * {$side.mould_height}</td>
-        <td><a href="{:getImageUrl($side[create_photo])}" target="_blank"><img src="{:getImageUrl($side[create_photo],100)}" /></a></td>
-        <td><a href="{:getImageUrl($side[design_photo])}" target="_blank"><img src="{:getImageUrl($side[design_photo],100)}" /></a></td>
-        <td>{$side.coordinate_start}<br />{$side.coordinate_end}</td>
-        <td><a href="{:U('mould/edit', array('cat_id'=>$cat_id, 'id'=>$side['id']))}">编辑</a>
-          <a href="{:U('mould/delete', array('cat_id'=>$cat_id, 'id'=>$side['id']))}" onclick="return confirm('确认要删除吗？');">删除</a></td>
+        <td>{$side.name}</td>
+        <td>{$side.design_width} * {$side.design_height}</td>
+        <!--<td>{$side.mould_width} * {$side.mould_height}</td>-->
+        <td><a href="{:getImageUrl($side[create_photo])}" target="_blank"><img style="max-width: 100px;" src="{:getImageUrl($side[photo])}" /></a></td>
+        <td><a href="{:getImageUrl($side[design_photo])}" target="_blank"><img style="max-width: 100px;" src="{:getImageUrl($side[design_photo])}" /></a></td>
+        <td>{$side.left_top_coordinate}</td>
+        <td>{$side.right_top_coordinate}</td>
+        <td>{$side.left_bottom_coordinate}</td>
+        <td>{$side.right_bottom_coordinate}</td>
+        <td>
+          <a href="{:U('mould/edit', array('id'=>$side['id']))}">编辑</a>
+          <a href="{:U('goodsModel/index', array('id'=>$side['id']))}">查看商品</a>
+          <a href="{:U('mould/delete', array('id'=>$side['id']))}" onclick="return confirm('确认要删除吗？');">删除</a>
+        </td>
       </tr>
     </volist>
 

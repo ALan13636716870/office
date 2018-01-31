@@ -1,11 +1,11 @@
 <include file="Common:header" />
 
-<div class="container">
+<div class="">
   <div class="row">
     <div class="col-md-12">
-      <h4><if condition="$parentId eq 0">产品列表<else />"{$topCategory.name}"型号列表</if></h4>
-      <a href="{:U('category/edit?id=0')}" class="btn"><i class="fa fa-plus"></i> 添加产品</a>
-      <a href="{:U('mould/cache')}" class="btn pull-right">缓存产品</a>
+      <h4>元素列表</h4>
+      <a href="{:U('model/element_edit')}" class="btn"><i class="fa fa-plus"></i> 添加模具</a>
+
     </div>
   </div>
 
@@ -14,24 +14,27 @@
     <tr>
       <th width="5%">ID</th>
       <th width="25%">名称</th>
-      <th width="5%">模具个数</th>
+      <th width="5%">宽</th>
+      <th width="5%">高</th>
+      <th width="5%">图片</th>
+      <th width="5%">显示顺序</th>
+      <th width="5%">种类</th>
       <th width="10%">操作</th>
     </tr>
     </thead>
     <tbody>
-    <volist name="categoryList" id="category">
+    <volist name="element_list" id="element">
       <tr>
-        <td>{$category.cat_id}</td>
-        <td>{$category.cat_name}</td>
-        <td align="center">{$category.mould_nums}</td>
+        <td>{$element.id}</td>
+        <td>{$element.title}</td>
+        <td>{$element.width}</td>
+        <td>{$element.height}</td>
+        <td><img style="max-width: 100px;max-height: 150px" src="{:getImageUrl($element[photo])}" alt=""></td>
+        <td>{$element.display_order}</td>
+        <td>{$element.type}</td>
         <td>
-          <a href="{:U('model/cat_edit')}&id={$category.cat_id}">编辑</a>
-          <!--<a href="{:U('category/delete')}&id={$category.id}" onclick="return confirm('确定是否删除吗？');">删除</a>-->
-          <if condition="$parentId eq 0">
-            <a href="{:U('mould/index')}&id={$category.cat_id}">型号列表</a>
-          <else />
-            <a href="{:U('mould/index')}&category_id={$category.cat_id}">模具列表</a>
-          </if>
+          <a href="{:U('model/element_edit',array('id'=>$element[id]))}">编辑</a>
+          <a href="{:U('mould/index',array('id'=>$element[id]))}">面列表</a>
         </td>
       </tr>
     </volist>

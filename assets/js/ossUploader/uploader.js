@@ -40,6 +40,7 @@
 
     // 当有文件被添加进队列的时候
     up.on( 'fileQueued', function( file ) {
+
       list_files[file.id] = file;
       getToken();
       var item_obj = createItem(file.id);
@@ -75,7 +76,9 @@
     //文件上传成功
     up.on( 'uploadSuccess', function( file, response ) {
       var item_obj = createItem(file.id);
+
       item_obj.find('.webuploader-progress').html('(上传成功)');
+
       if(response._raw == ''){
         addShow(file.id, {'path':list_files[file.id]['path'],'uploaded':true});
       }
@@ -93,19 +96,22 @@
 
     //向展示区添加一张图片信息
     function addShow(fileid, imginfo){
-      if(imginfo.path == '')return false;
+
+      if(imginfo.path == null)return false;
       if(!settings.multi){
         list_obj.html('');
       }
 
       var item_obj = createItem(fileid);
+
       if(imginfo.path.substr(0,7)=="http://"){
         var imgurl = simgurl = imginfo.path;
       }else{
         var imgurl = oss_preview_api+'&path='+imginfo.path, simgurl = imgurl+'&width=100';
       }
 
-      var img_obj = $('<a href="'+imgurl+'" target="_blank"><img src="'+simgurl+'"></a>');
+      var img_obj = $('<a href="'+imgurl+'" target="_blank"><img src="'+imgurl+'"></a>');
+
       item_obj.append(img_obj);
       //var view_obj = $('<div />').attr('class', 'webuploader-view');
       //view_obj.append(img_obj);
@@ -179,9 +185,9 @@
     function initItems(){
       if(settings.initData.length == 0)return false;
       if(settings.multi){
-        $.each(settings.initData, function(i,v){
+          $.each(settings.initData, function(i,v){
           v['uploaded'] = false;
-          addShow(v.id+randomString(6),v);
+          addShow(v.id+randomString(6),{'path':v, 'uploaded':false});
         });
       }else{
         addShow(container_obj.attr('id'),{'path':settings.initData, 'uploaded':false});

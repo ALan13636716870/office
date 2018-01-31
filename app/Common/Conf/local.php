@@ -4,11 +4,11 @@ return array(
     //数据库配置
     'DB_TYPE'=>'mysql',
     'DB_HOST'=>'localhost',
-    'DB_NAME'=>'amazon',
+    'DB_NAME'=>'wt',
     'DB_USER'=>'phonecase',
     'DB_PWD'=>'a123456@',
     'DB_PORT'=>3306,
-    'DB_PREFIX'=>'amazon_',
+    'DB_PREFIX'=>'wt_',
     'DB_CHARSET'=>'utf8',
 
     'OPENSEARCH_KEY' => 'Zdr7A3USNdbTbLM8',

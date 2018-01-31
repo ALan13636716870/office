@@ -1,0 +1,42 @@
+<include file="Common:header" />
+
+<div class="container">
+  <div class="row">
+    <div class="col-md-12">
+      <h4>模具面：
+        <a href="{:U('mould/index', array('category_id'=>$categoryInfo[id]))}">{$categoryInfo.name}</a>
+        > {$mouldInfo.title}</h4>
+      <!--<a href="{:U('mould/add', array('id'=>0,'cat_id'=>$cat_id))}" class="btn"><i class="fa fa-plus"></i> 添加面</a>-->
+    </div>
+  </div>
+
+  <table id="mould-list" class="table table-border table-bordered table-bg table-hover table-order-sort">
+    <thead>
+    <tr>
+      <th align="center">ID</th>
+      <th align="center">所属属性</th>
+      <th align="center">名称</th>
+      <th align="center">操作</th>
+    </tr>
+    </thead>
+    <tbody>
+    <volist name="attr_list" id="attr">
+      <tr>
+        <td>{$attr.id}</td>
+        <td>{$attr.attr_name}</td>
+        <td>{$attr.attr_value}</td>
+        <td>
+          <a href="{:U('attribute/value_edit', array('id'=>$attr[id]))}">编辑</a>
+          <!--<a href="{:U('attribute/attr_value_list', array('id'=>$attr[attr_id]))}">查看</a>-->
+        </td>
+        <!--<a href="{:U('mould/delete', array('cat_id'=>$cat_id, 'id'=>$side['id']))}" onclick="return confirm('确认要删除吗？');">删除</a></td>-->
+      </tr>
+    </volist>
+
+    </tbody>
+  </table>
+</div>
+
+<include file="Common:footer" />
+</body>
+</html>

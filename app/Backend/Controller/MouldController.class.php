@@ -15,7 +15,7 @@ class Mouldcontroller extends Controller
     public function index(){
         $id = I('get.id',0,'htmlspecialchars,trim');
 
-        $sideList = M('mould_side')->where(array('cat_id'=>$id))->select();
+        $sideList = M('mould')->select();
 
         $this ->assign('cat_id',$id);
         $this -> assign('sideList',$sideList);
@@ -23,41 +23,22 @@ class Mouldcontroller extends Controller
     }
     public function edit($id = 0){
         if(!IS_POST){
-            $cat_id = I('get.cat_id',0,'intval');
-            if(!$cat_id){
-                $this->error('必须指定模具');
-            }
-
-            $mouldInfo = M('category')->where(array('cat_id'=>$cat_id))->find();
-            if(!$mouldInfo){
-                $this->error('模具不存在');
-            }
-
             if($id){
-                $sideInfo = M('mould_side')->where(array('id' => $id))->find();
+                $sideInfo = M('mould')->where(array('id' => $id))->find();
                 if(!$sideInfo){
-                    $this->error('模具面不存在');
+                    $this->error('模具不存在');
                 }
             }else{
                 $sideInfo = array('id'=>0);
             }
-
-            $this->assign('cat_id', $cat_id);
             $this->assign('sideInfo', $sideInfo);
             $this->display();
         }else{
-            $catId = I('post.cat_id',0,'intval');
-            if(!$catId){
-                $this->error('必须指定模具');
-            }
 
-            $mouldInfo = M('category')->where(array('cat_id'=>$catId))->find();
-            if(!$mouldInfo){
-                $this->error('模具不存在');
-            }
 
-            $title = I('post.title', '', 'trim');
-            if(empty($title)){
+
+            $name = I('post.name', '', 'trim');
+            if(empty($name)){
                 $this->error('模具面名称不能为空');
             }
 
@@ -77,48 +58,41 @@ class Mouldcontroller extends Controller
                 ksort($newPhotoes);
             }*/
             $data = array(
-                'title' => $title,
-                'width' => I('post.width', '', 'intval'),
-                'height' => I('post.height', '', 'intval'),
-                'mould_width' => I('post.mould_width', '', 'intval'),
-                'mould_height' => I('post.mould_height', '', 'intval'),
-                'cat_id' => $catId,
-                'create_photo' => $createPhoto,
-                'design_photo' => $designPhoto,
-                'position' => I('post.position', '', 'intval'),
-                'display_order' => I('post.display_order', '', 'intval'),
-                'coordinate_start' => I('post.coordinate_start', '', 'trim'),
-                'coordinate_end' => I('post.coordinate_end', '', 'trim'),
-                'need_create' => I('post.need_create',1,'intval')
+                'name' => $name,
+                'photo'  => I('post.photo','','htmlspecialchars,trim'),
+                'design_photo' => I('post.design_photo','','htmlspecialchars,trim'),
+                'design_width' => I('post.design_width','','intval'),
+                'design_height' => I('post.design_height','','intval'),
+                'left_top_coordinate' => I('post.left_top_coordinate','','htmlspecialchars,trim'),
+                'right_top_coordinate' => I('post.right_top_coordinate','','htmlspecialchars,trim'),
+                'left_bottom_coordinate' => I('post.left_bottom_coordinate','','htmlspecialchars,trim'),
+                'right_bottom_coordinate' => I('post.right_bottom_coordinate','','htmlspecialchars,trim'),
+                'display_order' => I('post.display_order',0,'intval'),
             );
+//            var_dump($data);exit();
 
-            if($data['need_create']){
-                if(!preg_match('/^([\d\-]+),([\d\-]+)$/is', $data['coordinate_start'])){
-                    $this->error('起始坐标填错了');
-                }
-                if(!preg_match('/^([\d\-]+),([\d\-]+)$/is', $data['coordinate_end'])){
-                    $this->error('结束坐标填错了');
-                }
+            if(!preg_match('/^([\d\-]+),([\d\-]+)$/is', $data['left_top_coordinate'])){
+                $this->error('左上角坐标填错了');
             }
-
-            if($id){
-                $sideInfo = M('mould_side')->where(array('id'=>$id))->find();
+            if(!preg_match('/^([\d\-]+),([\d\-]+)$/is', $data['left_bottom_coordinate'])){
+                $this->error('左下角坐标填错了');
+            }
+            if(!preg_match('/^([\d\-]+),([\d\-]+)$/is', $data['right_top_coordinate'])){
+                $this->error('右上角坐标填错了');
+            }
+            if(!preg_match('/^([\d\-]+),([\d\-]+)$/is', $data['right_bottom_coordinate'])){
+                $this->error('右下角坐标填错了');
+            }
+            if($id <> 0){
+                $sideInfo = M('mould')->where(array('id'=>$id))->find();
                 if(!$sideInfo){
                     $this->error('模具面不存在');
                 }
-
-                M('mould_side')->where(array('id'=>$id))->save($data);
-
-                if($sideInfo['width'] != $data['width'] || $sideInfo['height'] != $data['height']
-                    || $sideInfo['mould_width'] != $data['mould_width'] || $sideInfo['mould_height'] != $data['mould_height']
-                    || $sideInfo['need_create'] != $data['need_create']
-                ){
-                    M('product')->where(array('side_id'=>$id))->delete();
-                }
+                $result = M('mould')->where(array('id'=>$id))->save($data);
             }else{
-                $id = M('mould_side')->add($data);
+                $result = M('mould')->add($data);
             }
-
+/*
             //上传不需要生成的图片到服务器
             if($data['need_create'] == '0'){
                 $shellStr = 'cd '.C('OSSCMD_PATH').' ';
@@ -150,10 +124,13 @@ class Mouldcontroller extends Controller
                 file_put_contents($shellPath, $shellStr);
                 exec('sh '.$shellPath.' >/dev/null &');
             }
-
-            $this->success('模具面编辑成功！', U('mould/index', array('id'=>$data['cat_id'])));
+*/
+            if($result){
+                $this->success('模具编辑成功！', U('mould/index', array('id'=>$data['cat_id'])));
+            }else{
+                $this ->error('模具编辑失败');
+            }
         }
-
     }
     public function add(){
         if(IS_POST){
@@ -222,11 +199,28 @@ class Mouldcontroller extends Controller
                 exec('sh '.$shellPath.' >/dev/null &');
             }
 
-            $this->success('模具面编辑成功！', U('mould/index', array('id'=>$data['cat_id'])));
+            $this->success('模具编辑成功！', U('mould/index'));
         }else{
             $catId = I('post.cat_id', '', 'trim');
             $this -> assign('cat_id',$catId);
             $this ->display('edit');
+        }
+    }
+    public function delete(){
+        $id = I('get.id',0,'intval');
+        if($id == 0){
+            $this ->error('请选择模具');
+        }
+        $mould = M('mould')->where('id='.$id)->find();
+        if($mould){
+            $this ->error('模具不存在');
+
+        }
+        $result = M('mould')->where('id='.$id)->delete();
+        if($result){
+            $this->success('模具删除成功！', U('mould/index'));
+        }else{
+            $this ->error('删除失败');
         }
     }
 }

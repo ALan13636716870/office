@@ -8,16 +8,13 @@
         <tr>用户信息</tr>
         <thead>
         <tr>
-          <th  align="center"  width="25%">ID</th>
-          <td  align="center" width="25%">{$user.id}</td>
-          <th  align="center"  width="25%">姓名</th>
-          <td  align="center">{$user.username}</td>
+          <th   style="text-align: center" >姓名</th>
+          <td  align="center">{$user.name}</td>
         </tr>
         <tr>
-          <th align="center"  width="15%">是否禁用</th>
-          <td  align="center">{$user.id}</td>
-          <th  width="15%">邮箱</th>
+          <th   style="text-align: center" >邮箱</th>
           <td  align="center" >{$user.email}</td>
+
         </tr>
         </tbody>
       </table>
@@ -26,27 +23,30 @@
         <thead>
         <tr>
           <th width="5%">ID</th>
-          <th width="10%">展示图</th>
-          <th width="15%">工厂图</th>
-          <th width="15%">宽</th>
-          <th width="15%">高</th>
-          <th width="15%">商品数量</th>
-          <th width="10%">商品单价</th>
-          <!--<th width="10%">操作</th>-->
+          <th >名称</th>
+          <th >购买数量</th>
+          <th >购买总价</th>
+          <th >总运费</th>
+          <th >展示图</th>
+          <th >工厂图</th>
+          <th >定制图</th>
+          <th >表带</th>
+          <th >表盘</th>
         </tr>
         </thead>
         <tbody>
-        <volist name="designList" id="flow">
+        <volist name="goodsList" id="goods">
           <tr>
-            <td>{$flow.order_id}</td>
-            <td><img src="{$flow.formatted_design_photo}"/></td>
-            <td><img src="{$flow.formatted_effect_photo}"/></td>
-            <td>{$flow.width}</td>
-            <td>{$flow.height}</td>
-            <td>{$flow.nums}</td>
-            <td>{$flow.goods_price}</td>
-            <!--<td><a href="{:U('flow/edit', array('id'=>$flow[order_id]))}">查看详情</a></td>-->
-              <!--<a href="{:U('mould/delete', array('cat_id'=>$cat_id, 'id'=>$side['id']))}" onclick="return confirm('确认要删除吗？');">删除</a></td>-->
+            <td>{$goods.id}</td>
+            <td>{$goods.goods_name}</td>
+            <td>{$goods.quantity_ordered}</td>
+            <td>{$goods.item_price_amount}</td>
+            <td>{$goods.shipping_price_amount}</td>
+            <td><img src="{:getImageUrl($goods[image_factory])}"/></td>
+            <td><img src="{:getImageUrl($goods[image_url])}"/></td>
+            <td><img src="{:getImageUrl($goods[design_photo])}"/></td>
+            <td>{$goods.strap}</td>
+            <td>{$goods.dial}</td>
           </tr>
         </volist>
 
@@ -57,34 +57,78 @@
         <tr>订单信息</tr>
         <tr>
           <th width="5%">订单号</th>
-          <td>{$order.order_sn}</td>
+          <td>{$order.order_no}</td>
           <th width="10%">快递单号</th>
           <td>
-            <input id="invoice_no" type="text" name="invoice_no" value="{$order.invoice_no}" <if condition='$order.is_submit eq 1'>readonly</if> />
+            <input id="invoice_no" type="text" name="invoice_no" value="{$order.shipping_number}" <if condition='$order.is_submit eq 1'>readonly</if> />
             <if condition='$order.is_submit eq 0'><button type="button" onclick="order_invoice_no({$order.order_id})">修改</button></if>
           </td>
 
         </tr>
 
         <tr>
-          <th width="15%">金额</th>
-          <td>{$order.formatted_goods_price}</td>
-          <th width="15%">地址</th>
-          <td>{$order.country} {$order.city}</td>
+          <th width="15%">支付方式</th>
+          <td>{$order.payment_method}</td>
+          <th width="15%">订单总金额</th>
+          <td>{$order.amount}</td>
 
         </tr>
         <tr>
-          <th width="15%">邮箱</th>
-          <td>{$order.email}</td>
+          <th width="15%">订单最后操作时间</th>
+          <td>{$order.last_update_date|date='Y-m-d ',###}</td>
           <th width="15%">商品数量</th>
-          <td>{$order.zipcode}</td>
+          <td>{$order.countgoods}</td>
 
         </tr>
         <tr>
-          <th width="10%">邮编</th>
-          <td>{$order.zipcode}</td>
+          <th width="10%">订单状态</th>
+          <td>{$order.order_status}</td>
         </tr>
       </table>
+        <table id="mould-list" class="table table-border table-bordered table-bg table-hover table-order-sort">
+          <!--订单  $user-->
+          <tr>收货人信息</tr>
+          <tr>
+            <th width="5%">姓名</th>
+            <td>{$order.name}</td>
+            <th width="10%">地址一</th>
+            <td>{$order.address_line1}</td>
+
+          </tr>
+
+          <tr>
+            <th width="15%">邮编</th>
+            <td>{$order.postal_code}</td>
+            <th width="15%">地址二</th>
+            <td>{$order.address_line2}</td>
+
+          </tr>
+          <tr>
+            <th width="15%">电话</th>
+            <td>{$order.phone}</td>
+            <th width="15%">地址三</th>
+            <td>{$order.address_line3}</td>
+
+          </tr>
+          <tr>
+            <th width="15%">邮箱</th>
+            <td>{$order.buyer_email}</td>
+            <th width="15%">国家</th>
+            <td>{$order.country}</td>
+          </tr>
+          <tr>
+
+            <th width="10%">州</th>
+            <td>{$order.state_or_region}</td>
+            <th>城市</th>
+            <td>{$order.state_or_region}</td>
+          </tr>
+          <tr>
+
+            <th width="10%">区</th>
+            <td>{$order.district}</td>
+          </tr>
+        </table>
         <div>
           <input type="hidden" name="user_id" value="{$user.id}">
           <input type="hidden" name="order_id" value="{$order.order_id}">
@@ -92,63 +136,7 @@
           <a href="{:U('flow/index')}">返回</a>
         </div>
       </form>
-      <!--<form action="<if condition='isset($sideInfo[id]) '>{:U('mould/edit')}<else />{:U('mould/add')}</if>" method="post" id="form-category-edit">-->
-        <!--<div class="form-group">-->
-          <!--<label for="title"><span class="c-red">*</span>标题：</label>-->
-          <!--<input type="text" class="form-control" autocomplete="off" name="title" id="title" value="{$sideInfo.title}" required />-->
-        <!--</div>-->
-        <!--<div class="form-group">-->
-          <!--<label class="control-label"><span class="c-red">*</span>是否需要生成：</label>-->
-          <!--<div>-->
-            <!--<label class="radio-inline"><input name="need_create" type="radio" value="0" <if condition="$sideInfo.need_create eq 0">checked</if> required /> 不需要</label>-->
-            <!--<label class="radio-inline"><input name="need_create" type="radio" value="1" <if condition="$sideInfo.need_create eq 1">checked</if> /> 需要</label>-->
-          <!--</div>-->
-        <!--</div>-->
-        <!--<div class="form-group">-->
-          <!--<label for="width">匹配设计图宽：</label>-->
-          <!--<input type="text" class="form-control" autocomplete="off" name="width" id="width" value="{$sideInfo.width}"  />-->
-        <!--</div>-->
-        <!--<div class="form-group">-->
-          <!--<label for="height">匹配设计图高：</label>-->
-          <!--<input type="text" class="form-control" autocomplete="off" name="height" id="height" value="{$sideInfo.height}"  />-->
-        <!--</div>-->
-        <!--<div class="form-group">-->
-          <!--<label for="mould_width">模具图宽：</label>-->
-          <!--<input type="text" class="form-control" autocomplete="off" name="mould_width" id="mould_width" value="{$sideInfo.mould_width}"  />-->
-        <!--</div>-->
-        <!--<div class="form-group">-->
-          <!--<label for="mould_height">模具图高：</label>-->
-          <!--<input type="text" class="form-control" autocomplete="off" name="mould_height" id="mould_height" value="{$sideInfo.mould_height}"  />-->
-        <!--</div>-->
-        <!--<div class="form-group clearfix">-->
-          <!--<label>生成产品图的图层(不透明)：</label>-->
-          <!--<div class="photo-picker" id="create-photo-picker">选择图片</div>-->
-          <!--<div id="create-photo-container"></div>-->
-        <!--</div>-->
-        <!--<div class="form-group clearfix">-->
-          <!--<label>设计器里的图层(半透明)：</label>-->
-          <!--<div class="photo-picker" id="design-photo-picker">选择图片</div>-->
-          <!--<div id="design-photo-container"></div>-->
-        <!--</div>-->
-        <!--<input type="hidden" name="position" value="1" placeholder="位置(从1开始，在之前填写n，在之后填写-n)" />-->
-        <!--<div class="form-group">-->
-          <!--<label for="coordinate_start">起始坐标：</label>-->
-          <!--<input type="text" class="form-control" autocomplete="off" name="coordinate_start" id="coordinate_start" value="{$sideInfo.coordinate_start}" placeholder="默认左上角，数字之间用英文逗号隔开" />-->
-        <!--</div>-->
-        <!--<div class="form-group">-->
-          <!--<label for="coordinate_end">结束坐标：</label>-->
-          <!--<input type="text" class="form-control" autocomplete="off" name="coordinate_end" id="coordinate_end" value="{$sideInfo.coordinate_end}" placeholder="默认右下角，数字之间用英文逗号隔开" />-->
-        <!--</div>-->
-        <!--<div class="form-group">-->
-          <!--<label for="display_order"><span class="c-red">*</span>排序：</label>-->
-          <!--<input type="text" class="form-control" autocomplete="off" name="display_order" id="display_order" value="{$sideInfo.display_order}" required />-->
-        <!--</div>-->
-        <!--<div class="form-group">-->
-          <!--<button class="btn btn-primary" type="submit">保存</button>-->
-        <!--</div>-->
-        <!--<input type="hidden" name="cat_id" value="{$cat_id}" />-->
-        <!--<input type="hidden" name="id" value="{$sideInfo.id}" />-->
-      <!--</form>-->
+
     </div>
   </div>
 </div>

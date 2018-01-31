@@ -8,7 +8,7 @@
 
   <div class="row">
     <div class="col-md-12">
-      <div class="pull-left pagination">{$pageStr}</div>
+      <h4>商品管理：</h4>
     </div>
   </div>
 
@@ -41,27 +41,40 @@
   <table id="photo-list" class="table table-border table-bordered table-bg table-hover table-order-sort mt-10">
     <thead>
     <tr>
-      <th width="10%">批次</th>
-      <th width="10%">所属模具</th>
-      <th width="5%">图片</th>
-      <th>标题</th>
+      <th width="5%">ID</th>
+      <th width="8%">标题</th>
+      <th width="8%">描述</th>
+      <th width="8%">表带</th>
+      <th width="8%">表盘</th>
+      <th width="8%">所属模具</th>
+      <th width="10%">商品图</th>
+      <th width="10%">工厂图</th>
+      <th width="10%">展示图</th>
+      <th width="5%">价格</th>
+      <th width="5%">所属分类</th>
       <th width="20%">操作</th>
     </tr>
     </thead>
     <tbody>
     <volist name="goodsList" id="goods">
       <tr>
-        <td>{$goods.goods_sn}</td>
-
-        <td>{$goods.cat_name}</td>
-        <td><a href="{$goods.photo}" target="_blank"><img src="{$goods.goods_img}" width="100" /></a></td>
-        <td>{$goods.goods_name}</td>
+        <td>{$goods.id}</td>
+        <td>{$goods.title}</td>
+        <td>{$goods.description}</td>
+        <td>{$goods.strap}</td>
+        <td>{$goods.dial}</td>
+        <td>{$goods.mould}</td>
+        <td><a href="{:getImageUrl($goods[photo])}" target="_blank"><img src="{:getImageUrl($goods[photo])}" width="100" /></a></td>
+        <td><a href="{:getImageUrl($goods[factory_photo])}" target="_blank"><img src="{:getImageUrl($goods[factory_photo])}" width="100" /></a></td>
+        <td><a href="{:getImageUrl($goods[photo_view])}" target="_blank"><img src="{:getImageUrl($goods[photo_view])}" width="100" /></a></td>
+        <td>{$goods.format_price}</td>
+        <td>{$goods.category_value}</td>
         <td>
           <!--<div class="radio col-md-12"><label><input type="radio" name="radio_status_{$goods.asin}" class="status_radio" value="-1" _asin="{$goods.asin}" <if condition="$goods['status'] eq '-1'">checked</if> /> 不可用</label></div>-->
           <!--<div class="radio col-md-12"><label><input type="radio" name="radio_status_{$goods.asin}" class="status_radio" value="1" _asin="{$goods.asin}" <if condition="$goods['status'] eq '1'">checked</if> /> 可用</label></div>-->
           <!--<div class="radio col-md-12"><label><input type="radio" name="radio_status_{$goods.asin}" class="status_radio" value="0" _asin="{$goods.asin}" <if condition="$goods['status'] eq '0'">checked</if> /> 未确定</label></div>-->
-          <a href="{:U('goodsModel/edit',array('id'=>$goods[goods_id]))}">编辑</a>
-          <a href="{:U('goodsModel/del',array('id'=>$goods[goods_id]))}">删除</a>
+          <a href="{:U('goodsModel/edit',array('id'=>$goods[id],'mould_id'=>'mould_id'))}">编辑</a>
+          <a href="{:U('goodsModel/del',array('id'=>$goods[goods_id],'mould_id'=>'mould_id'))}">删除</a>
         </td>
       </tr>
     </volist>

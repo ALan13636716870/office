@@ -19,20 +19,15 @@
     <tr>
       <th align="center">用户名</th>
       <th align="center">邮箱</th>
-      <th align="center">paypal帐号</th>
       <th align="center" width="20%">操作</th>
     </tr>
     </thead>
     <tbody>
     <volist name="userlist" id="user">
       <tr>
-        <td>{$user.username}</td>
+        <td>{$user.name}</td>
         <td>{$user.email}</td>
-        <th align="center">{$user.pay}</th>
         <td>
-          <!--<div class="radio col-md-12"><label><input type="radio" name="radio_status_{$goods.asin}" class="status_radio" value="-1" _asin="{$goods.asin}" <if condition="$goods['status'] eq '-1'">checked</if> /> 不可用</label></div>-->
-          <!--<div class="radio col-md-12"><label><input type="radio" name="radio_status_{$goods.asin}" class="status_radio" value="1" _asin="{$goods.asin}" <if condition="$goods['status'] eq '1'">checked</if> /> 可用</label></div>-->
-          <!--<div class="radio col-md-12"><label><input type="radio" name="radio_status_{$goods.asin}" class="status_radio" value="0" _asin="{$goods.asin}" <if condition="$goods['status'] eq '0'">checked</if> /> 未确定</label></div>-->
           <div style="display: inline-block">
           <if condition="$user[disable] eq 1">
           <a href="javascript:;" onclick="user_stop(this,{$user.id})">禁用</a>
